@@ -1,0 +1,36 @@
+.head{
+	height:101px;
+	width:1000px;
+	background-color:#3B5888;
+	margin:0 auto; 
+}
+
+.head .img1{
+	width:713px;
+	float:left;
+}
+
+.head .img2{
+	width:280px;
+	float:left;
+	margin-left:4px;
+}
+
+.head .img3{
+	float:left;
+}
+
+.navil{
+	float:right;
+}
+
+.navil li{
+	float:left;
+	list-style-type:none;
+	color:#C3CDDF;
+	font-size:14px;
+	height:22px;
+	width:100px;
+	line-height:23px;
+	text-align:center;
+}
