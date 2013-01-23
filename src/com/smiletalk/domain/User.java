@@ -1,6 +1,5 @@
 package com.smiletalk.domain;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,12 +35,16 @@ public class User implements java.io.Serializable {
 	private Integer visited;
 	private String doing;
 	private Short online;
-	private Timestamp registerDate;
-	private Timestamp loginDate;
+	private Date registerDate;
+	private Date loginDate;
 	private Short level;
 	private Short locked;
+	private String otherCountry;
+	private String otherCityName;
 	private Set userUniversities = new HashSet(0);
 	private Set userNets = new HashSet(0);
+	private Set userUniversities_1 = new HashSet(0);
+	private Set userNets_1 = new HashSet(0);
 
 	// Constructors
 
@@ -63,8 +66,9 @@ public class User implements java.io.Serializable {
 			String website, String interest, String music, String movie,
 			String game, String cartoon, String sport, String book,
 			String assn, Integer visited, String doing, Short online,
-			Timestamp registerDate, Timestamp loginDate, Short level,
-			Short locked, Set userUniversities, Set userNets) {
+			Date registerDate, Date loginDate, Short level, Short locked,
+			String otherCountry, String otherCityName, Set userUniversities,
+			Set userNets, Set userUniversities_1, Set userNets_1) {
 		this.city = city;
 		this.email = email;
 		this.name = name;
@@ -91,8 +95,12 @@ public class User implements java.io.Serializable {
 		this.loginDate = loginDate;
 		this.level = level;
 		this.locked = locked;
+		this.otherCountry = otherCountry;
+		this.otherCityName = otherCityName;
 		this.userUniversities = userUniversities;
 		this.userNets = userNets;
+		this.userUniversities_1 = userUniversities_1;
+		this.userNets_1 = userNets_1;
 	}
 
 	// Property accessors
@@ -281,19 +289,19 @@ public class User implements java.io.Serializable {
 		this.online = online;
 	}
 
-	public Timestamp getRegisterDate() {
+	public Date getRegisterDate() {
 		return this.registerDate;
 	}
 
-	public void setRegisterDate(Timestamp registerDate) {
+	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
 	}
 
-	public Timestamp getLoginDate() {
+	public Date getLoginDate() {
 		return this.loginDate;
 	}
 
-	public void setLoginDate(Timestamp loginDate) {
+	public void setLoginDate(Date loginDate) {
 		this.loginDate = loginDate;
 	}
 
@@ -313,6 +321,22 @@ public class User implements java.io.Serializable {
 		this.locked = locked;
 	}
 
+	public String getOtherCountry() {
+		return this.otherCountry;
+	}
+
+	public void setOtherCountry(String otherCountry) {
+		this.otherCountry = otherCountry;
+	}
+
+	public String getOtherCityName() {
+		return this.otherCityName;
+	}
+
+	public void setOtherCityName(String otherCityName) {
+		this.otherCityName = otherCityName;
+	}
+
 	public Set getUserUniversities() {
 		return this.userUniversities;
 	}
@@ -327,6 +351,22 @@ public class User implements java.io.Serializable {
 
 	public void setUserNets(Set userNets) {
 		this.userNets = userNets;
+	}
+
+	public Set getUserUniversities_1() {
+		return this.userUniversities_1;
+	}
+
+	public void setUserUniversities_1(Set userUniversities_1) {
+		this.userUniversities_1 = userUniversities_1;
+	}
+
+	public Set getUserNets_1() {
+		return this.userNets_1;
+	}
+
+	public void setUserNets_1(Set userNets_1) {
+		this.userNets_1 = userNets_1;
 	}
 
 }

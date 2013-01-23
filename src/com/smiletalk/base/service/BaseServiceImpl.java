@@ -1,5 +1,6 @@
 package com.smiletalk.base.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,7 +24,12 @@ public abstract class BaseServiceImpl implements BaseServiceInter {
 		this.sessionFactory = sessionFactory;
 	}
 
-
+    @Override
+    public Object findById(Class clazz, Serializable id) {
+    	// TODO Auto-generated method stub
+    	return this.sessionFactory.getCurrentSession().load(clazz, id);
+    }
+	
 	// hql: pass hql, can have ?
 	//parameters: ? is related to Object[]
 	public List getResult(String hql, Object[] parameters) {

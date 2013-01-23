@@ -38,6 +38,8 @@ public class ChangeInfo extends HttpServlet {
 		//get from spring£¬get the UniversityServiceInter bean
 		UniversityServiceInter universityService=(UniversityServiceInter) ctx.getBean("universityServiceImpl");
 		
+		
+		if(!proid.equals("--Choose City--")){
 		List<University> uniList=universityService.getResult("from University where city.ciId=?", new Object[]{Integer.valueOf(proid)});
 				
 		String res="<allUniversities>";
@@ -49,8 +51,7 @@ public class ChangeInfo extends HttpServlet {
 		res += "</allUniversities>";
 		out.write(res);
 		out.close();
-		System.out.println(res);
-        
+		}
         
 	}
 

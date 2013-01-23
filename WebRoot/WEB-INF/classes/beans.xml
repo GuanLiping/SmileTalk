@@ -67,17 +67,25 @@
 <bean id="universityServiceImpl" class="com.smiletalk.service.impl.UniversityServiceImpl">
 <property name="sessionFactory" ref="sessionFactory"></property>
 </bean>
+<bean id="userServiceImpl" class="com.smiletalk.service.impl.UserServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="userUniversityServiceImpl" class="com.smiletalk.service.impl.UserUniversityServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
 
 
 <!-- action setting -->
- 
 <bean name="/test" class="com.smiletalk.web.action.TestAction"/>
 <bean name="/register" class="com.smiletalk.web.action.RegisterAction">
 <property name="countryService" ref="countryServiceImpl"/>
 <property name="cityService" ref="cityServiceImpl"/>
 <property name="universityService" ref="universityServiceImpl"/>
-
+<property name="userService" ref="userServiceImpl"/>
+<property name="userUniversityService" ref="userUniversityServiceImpl"/>
 </bean>
+<bean name="/profile" class="com.smiletalk.web.action.ProfileAction"/>
+
 <!-- tx Manager -->
 <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
   	<property name="sessionFactory" ref="sessionFactory"/>

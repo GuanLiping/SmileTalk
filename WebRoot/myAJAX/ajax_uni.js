@@ -53,7 +53,7 @@ function setProUnis(o) {
 	if (xmlrequest) {
 		
 		
-		var req = "/SmileTalk/ChangeInfo?proid="+o.id;
+		var req = "/SmileTalk/ChangeInfo?proid="+o.value;
 	   	
 		xmlrequest.open("get", req, true);	
 		xmlrequest.onreadystatechange=getProUnis;	
@@ -75,9 +75,19 @@ function getProUnis() {
 			// var xmlDOM = xmlrequest.responseXML;  			    
 			 //var allUniversities = xmlDOM.documentElement;   
 			
+			
 			 var unis = xmlrequest.responseXML.getElementsByTagName("unis");
 			
-			var con = "<table width='100%'><tr>";
+			 var selector=$("#university");
+			 
+			 selector.find('option').remove();
+			 selector.append('<option">"--Choose School--"</option>'); 
+			 for (var i = 1; i <= unis.length; i++) {
+				 selector.append("<option value='" + unis[i - 1].childNodes[0].childNodes[0].data + "'>" + unis[i - 1].childNodes[1].childNodes[0].data + "</option>");
+			 }
+			 
+			 
+			/*var con = "<table width='100%'><tr>";
 			for (var i = 1; i <= unis.length; i++) {
 				con += "<td><li><a onclick='showMyUni(this)' href='javascript:void(0);' id='" + unis[i - 1].childNodes[0].childNodes[0].data + "' class='xh'>" + unis[i - 1].childNodes[1].childNodes[0].data + "</a></li></td>";
 				if (i % 2 == 0) {
@@ -86,11 +96,16 @@ function getProUnis() {
 			}
 			con += "</tr></table>";
 			
-			document.getElementById("uniTbl").innerHTML = con;
+			document.getElementById("uniTbl").innerHTML = con;*/
 		}
 	}
 }
 function showMyUni(o) {
+	
+	
+	
+	
+	
 	
 	//document.getElementById("university").value=o.innerHTML;
 	$("#university").val(o.innerHTML);
@@ -99,6 +114,7 @@ function showMyUni(o) {
 	$("#uniDiv").css("display","none");
 	//document.getElementById("uuniversity").value=o.id;
 	$("#uuniversity").val(o.id);
+	
 }
 function showUniTbl() {
 	

@@ -1,5 +1,6 @@
 package com.smiletalk.base.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface BaseServiceInter {
@@ -13,4 +14,7 @@ public interface BaseServiceInter {
 	public void delete(Object obj);
 	
 	public void update(Object obj);
+	
+	public Object findById(Class clazz,Serializable id);
+	
 }

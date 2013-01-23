@@ -12,9 +12,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.smiletalk.domain.City;
+import com.smiletalk.domain.University;
+import com.smiletalk.domain.User;
+import com.smiletalk.domain.UserUniversity;
 import com.smiletalk.service.inter.CityServiceInter;
 import com.smiletalk.service.inter.CountryServiceInter;
 import com.smiletalk.service.inter.UniversityServiceInter;
+import com.smiletalk.service.inter.UserServiceInter;
+import com.smiletalk.service.inter.UserUniversityServiceInter;
+import com.smiletalk.web.form.UserForm;
 
 /** 
  * MyEclipse Struts
@@ -25,7 +32,6 @@ import com.smiletalk.service.inter.UniversityServiceInter;
  */
 
   
-
 public class RegisterAction extends DispatchAction {
 	
 	@Resource
@@ -35,12 +41,45 @@ public class RegisterAction extends DispatchAction {
 
 	private UniversityServiceInter universityService;
 	
+	private UserServiceInter userService;
+	
+	private UserUniversityServiceInter userUniversityService;
+	
+	
+	public UserUniversityServiceInter getUserUniversityService() {
+		return userUniversityService;
+	}
+
+	public void setUserUniversityService(
+			UserUniversityServiceInter userUniversityService) {
+		this.userUniversityService = userUniversityService;
+	}
+
+	public UserServiceInter getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserServiceInter userService) {
+		this.userService = userService;
+	}
+
+	public CountryServiceInter getCountryService() {
+		return countryService;
+	}
+
+	public CityServiceInter getCityService() {
+		return cityService;
+	}
+
+	public UniversityServiceInter getUniversityService() {
+		return universityService;
+	}
+
 	//jump to register page UI-user interface
 	public ActionForward regUI(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
-		//register successful then jump to home.jsp
-		
+		//register successful then jump to home.jsp	
 		//prepare data when user choose university
 		
 		
@@ -61,6 +100,40 @@ public class RegisterAction extends DispatchAction {
 		// TODO Auto-generated method stub
 		//register successful then jump to home.jsp
 		
+		UserForm userForm=(UserForm) form;
+		
+		//get information and save the use
+		User user=new User();
+		user.setEmail(userForm.getEmail());
+		user.setLoginDate(new java.util.Date());
+		user.setName(userForm.getName());
+		user.setPwd(userForm.getPwd());
+		user.setRegisterDate(new java.util.Date());
+		user.setSex(userForm.getSex());
+        user.setOtherCountry(userForm.getOtherCountry());
+		//get city form user
+		City city=(City)cityService.findById(City.class, Integer.valueOf(userForm.getCityId()));
+		
+		if(Integer.valueOf(userForm.getCityId())==21){
+			user.setOtherCityName(userForm.getOtherCityName());
+		}		
+		user.setCity(city);
+
+		userService.save(user);
+				
+		if(!(userForm.getUniversityId().equals(null)||userForm.getUniversityId().equals("")))
+		{
+		//get the university object of this user
+		University university=(University)universityService.findById(University.class,Integer.valueOf(userForm.getUniversityId()));	
+		//set up the university of this user
+		UserUniversity useruniversity=new UserUniversity();
+		useruniversity.setUser(user);
+		useruniversity.setUniversity(university);
+		useruniversity.setUserType(userForm.getUserType());
+		userUniversityService.save(useruniversity);
+		}
+		
+		//save object
 		
 		
 		

@@ -13,11 +13,39 @@
 <script type="text/javascript" src="/SmileTalk/js/publicJs.js"></script>
 <script type="text/javascript" src="/SmileTalk/myAJAX/ajax_uni.js"></script>
 <script type="text/javascript">
+
+
+function chooseUniversity(){
+
+if( $("#status").val()=="student"){
+    $("#student1").show();
+
+    if(($("#country").val()=="Other")||($("#country").val()=="Finland"&&$("#city").val()=="21")){
+    $("#student1").hide();
+    $("#student2").show();
+    
+    }else {
+    $("#student2").hide();
+    $("#student1").show();
+    
+    }
+
+
+}else{
+$("#student2").hide();
+$("#student1").hide();
+}
+}
+
+
 $(document).ready(function(){
+    
     
     $("#selfChooseCountry").hide(); 
     $("#selfChooseCity").hide();
-    	
+    $("#student2").hide();
+    $("#student1").hide();	
+    
     
     $("#country").change(function(){	  
     	if($("#country").val()=="Other"){ 	 	
@@ -41,32 +69,45 @@ $(document).ready(function(){
     
      $("#status").change(function(){	
        $("#selfChooseCountry").hide(); 
-       $("#selfChooseCity").hide();
+       $("#selfChooseCity").hide();  
+       chooseUniversity();
      });
-$(".button1").click(function(){		
-	var span0=$("#name").val();
+     
+     $("#country").change(function(){
+     chooseUniversity();
+     });
+     
+     $("#city").change(function(){	
+     chooseUniversity();
+     });
+     
+     
+   $("form").submit(function(e){	 
+	
+    var span0=$("#name").val();
 	var span1=$("input[name='sex']:checked").val();
     var span2=$("#status").val();
     var span3=$("#country").val();
     var span4=$("#city").val();
     var span5=$("input[name='company']").val();
     var span6=$("#study_type").val();
-    var span7=$("input[name='university']").val();
+    var span7=$("university").find("option:selected").value();
     var span8=$("input[name='email']").val();
     var span9=$("#password1").val();
     var span10=$("#password2").val();
+   
     
-     
     if(span0==""){
     	$("#span0").show();
+    	e.preventDefault();
     }else{
     	$("#span0").empty();
     	$("#span0").css("border","0px");
     }
     
     if(span1==undefined){
-    	 
     	$("#span1").show();
+    	e.preventDefault();
     }else{
     	$("#span1").empty();
     	$("#span1").css("border","0px");
@@ -74,52 +115,64 @@ $(".button1").click(function(){
     
     if(span2==null){
     	$("#span2").show();
-    }else{
-    	$("#span2").empty();
-    	$("#span2").css("border","0px");
+    	e.preventDefault();
+    }else {
+        $("#span2").empty();
+	    $("#span2").css("border","0px");
+	    
+	    if(span2=="worker"){   			    
+		    if(span5==""){
+		    	$("#span5").show();
+		    	e.preventDefault();
+		    }else{
+		    	$("#span5").empty();
+		    	$("#span5").css("border","0px");
+		    }
+	    	    	 	
+	    }else if(span2=="student"){	        
+			if(span6=="--Choose--"){
+		    	$("#span6").show();
+		    	e.preventDefault();
+		    }else{
+		    	$("#span6").empty();
+		    	$("#span6").css("border","0px");
+		    }
+		    
+		    if(span7==undefined){
+		      
+		    	$("#span7").show();
+		    	e.preventDefault();
+		    }else{
+		    	$("#span7").empty();
+		    	$("#span7").css("border","0px");
+		    }       
+		              
+	    }
     }
     
     if(span3=="--Country--"){
-    	$("#span3").show();
+		    	$("#span3").show();
+		    	e.preventDefault();
+     }else{
+		    	$("#span3").empty();
+		    	$("#span3").css("border","0px");
+		    	
+     }
+		     
+	if(span4=="--Choose City--"){
+		    	$("#span4").show();
+		    	e.preventDefault();
     }else{
-    	$("#span3").empty();
-    	$("#span3").css("border","0px");
-    	
-    }
+		    	$("#span4").empty();
+		    	$("#span4").css("border","0px");
+	}
     
     
     
-    if(span4=="--Choose City--"){
-    	$("#span4").show();
-    }else{
-    	$("#span4").empty();
-    	$("#span4").css("border","0px");
-    }
-    
-    if(span5==""){
-    	$("#span5").show();
-    }else{
-    	$("#span5").empty();
-    	$("#span5").css("border","0px");
-    }
-    
-    if(span6=="--Choose--"){
-    	$("#span6").show();
-    }else{
-    	$("#span6").empty();
-    	$("#span6").css("border","0px");
-    }
-    
-    if(span7==""){
-    	$("#span7").show();
-    }else{
-    	$("#span7").empty();
-    	$("#span7").css("border","0px");
-    }
     
     if(span8==""){
     	$("#span8").show();
-    	
+    	e.preventDefault();
     }else{
     	$("#span8").empty();
     	$("#span8").css("border","0px");
@@ -127,6 +180,7 @@ $(".button1").click(function(){
     
     if(span9==""){
     	$("#span9").show();
+    	e.preventDefault();
     }else{
     	$("#span9").empty();
     	$("#span9").css("border","0px");
@@ -134,8 +188,17 @@ $(".button1").click(function(){
     
     if(span10==""){
     	$("#span10").show();
+    	e.preventDefault();
     }else{
     	$("#span10").empty();
+    	$("#span10").css("border","0px");
+    }
+    
+    if(span9!=span10){
+        $("#span10").show();
+    	e.preventDefault();
+    }else{
+        $("#span10").empty();
     	$("#span10").css("border","0px");
     }
     
@@ -171,7 +234,7 @@ $(".button1").click(function(){
 	               <tr>
 		                <td class="tab_tb1">Status:</td>
 		                <td>
-		                    <select size="3" id="status" onchange="changeStatus(this);">
+		                    <select size="3" id="status" name="userType" onchange="changeStatus(this);">
 		                            <option value="worker">Working</option>
 		                            <option value="student">Student</option>
 		                            <option value="nothing">Other</option> 
@@ -179,11 +242,30 @@ $(".button1").click(function(){
 		                </td>
 		                <td><span class="spanVal" id="span2">Choose your status</span></td>
 	               </tr>
+	               
+	                <!-- consider Undergraduate student start-->
+	                <tr class="student">
+		                <td class="tab_tb1">Type:</td>
+		                <td> 
+		                    <select id="study_type" name="userType">
+		                            <option>--Choose--</option>
+		                            <option value="Undergraduate">Undergraduate</option>
+		                            <option value="Master">Master student</option>
+		                            <option value="Doctoral">Doctoral student</option> 
+		                    </select>
+		                </td>
+		                <td><span class="spanVal" id="span6">Choose your study type</span></td>
+	               </tr>
+	               
+	               
+	               
+	               
+	               
 	               <!-- consider working people start-->
                    <tr class="worker">
 		                <td class="tab_tb1">Living Area:</td>
 		                <td>
-		                    <select id="country">
+		                    <select id="country" name="otherCountry">
 		                            <option>--Country--</option>
 		                            <option>Finland</option>
 		                            <option>Other</option>
@@ -194,7 +276,7 @@ $(".button1").click(function(){
 	               <tr id="selfChooseCountry" class="worker">
 		                <td class="tab_tb1">Country: </td>
 		                <td>
-		                  <input type="text" name="country"/>
+		                  <input type="text" name="otherCountry"/>
 		                </td>
 		                <td><span class="spanVal" id="span4">Choose your living city</span></td>
 	               </tr>
@@ -203,12 +285,12 @@ $(".button1").click(function(){
 	               <tr id="chooseCity" class="worker">
 		                <td class="tab_tb1"> </td>
 		                <td>
-		                    <select id="city">
+		                    <select id="city" name="cityId" onchange="setProUnis(this)">
 		                            <option>--Choose City--</option>
 		                            <c:forEach var="city" items="${citylist}">
-		                            <option>${city.ciName }</option>          
+		                            <option value="${city.ciId}">${city.ciName}</option>          
 		                            </c:forEach>
-		                            <option>--Other--</option>
+		                          
 		                    </select>
 		                </td>
 		                <td><span class="spanVal" id="span4">Choose your living city</span></td>
@@ -216,6 +298,7 @@ $(".button1").click(function(){
 	               <tr id="selfChooseCity" class="worker">
 		                <td class="tab_tb1">City:</td>
 		                <td>
+		                 <input type="hidden" name="cityId" value="21"/>
 		                <input type="text" name="city"/>
 		                </td>
 		                <td><span class="spanVal" id="span4">Choose your living city</span></td>
@@ -227,26 +310,27 @@ $(".button1").click(function(){
 	               </tr>
 	                <!-- consider working people end-->
 	                
-	                <!-- consider Undergraduate student start-->
-	                <tr class="student">
-		                <td class="tab_tb1">Type:</td>
-		                <td>
-		                    <select id="study_type">
-		                            <option>--Choose--</option>
-		                            <option>Undergraduate</option>
-		                            <option>Master student</option>
-		                            <option>Doctoral student</option> 
-		                    </select>
-		                </td>
-		                <td><span class="spanVal" id="span6">Choose your study type</span></td>
-	               </tr>
-	               <tr class="student">
+	                            
+	               <tr class="student" id="student1">
 		                <td class="tab_tb1">University:</td>
-		                <td>
-		                <input type="hidden" name="universityId" id="uuniversity"/>
-		                <input id="university" onclick="showUniTbl();" type="text" name="" /></td>
+		                <td> 
+		                 <select id="university" name="universityId">
+		                            <option>--Choose School--</option>                        
+		                 </select>
+		              <!--  <input type="hidden" name="universityId" id="uuniversity"/>-->
+		           </td>
 		                <td><span class="spanVal" id="span7">Choose your university</span></td>
 	               </tr>
+	               
+	               <tr class="student" id="student2">
+		                <td class="tab_tb1">University:</td>
+		                <td> 
+		                  <input name="university" id="university"/>
+		                <input type="hidden" name="universityId" id="uuniversity"/>
+		           </td>
+		                <td><span class="spanVal" id="span7">Choose your university</span></td>
+	               </tr>
+	               
 	               <!-- consider Undergraduate student end--> 
 	               <tr>
 		                <td class="tab_tb1">Email:&nbsp;</td>
@@ -257,14 +341,14 @@ $(".button1").click(function(){
 	               </tr> 
 	               <tr>
 		                <td class="tab_tb1">Set Password:</td>
-		                <td><input type="password" name="password" id="password1"/></td>
+		                <td><input type="password" name="pwd" id="password1"/></td>
 		                <td><span class="spanVal" id="span9">Type your password</span></td>
 	               </tr>             
 	               <tr>
 		                <td class="tab_tb1">Re-enter Password:</td>
 		           
 		           
-		                <td><input type="password" name="password" id="password2"/></td>
+		                <td><input type="password" name="pwd2" id="password2"/></td>
 		                <td><span class="spanVal" id="span10">Type your password again</span></td>
 	               </tr>
 	               <tr>
@@ -298,7 +382,7 @@ $(".button1").click(function(){
 			<td bordercolor="#C3C3C3" width="500px">
 			<c:forEach  var="country" items="${countrylist}">
 			<a id="${country.coId}" onclick="setCoUnis(this)" class="xh"
-			href="javascript:void(0);">${country.coName}</a> |
+			href="javascript:void(0);">${country.coName}</a>
 			</c:forEach>
 			</td>
 		</tr>
@@ -313,7 +397,7 @@ $(".button1").click(function(){
 							<c:forEach var="city" items="${citylist}">
 							<a onclick='setProUnis(this)' href="javascript:void(0);"
 							class="xh" id="${city.ciId}">
-							${city.ciName} </a>
+							${city.ciName} </a>|
 							</c:forEach>
 							</td>
 							
@@ -332,10 +416,10 @@ $(".button1").click(function(){
 					<td>				  
 					  <li>
 					     <a onclick='showMyUni(this)' href="javascript:void(0);"
-					      class="xh"  id="${university.universityId }">${university.name }</a>
+					      class="xh"  id='${university.universityId}'>${university.name }</a>
 					  </li>
 					</td>
-					<c:if test="${vs.count%2==0}">
+					<c:if test='${vs.count%2==0}'>
 					</tr><tr>
 					</c:if>
 					</c:forEach>
