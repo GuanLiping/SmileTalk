@@ -23,14 +23,6 @@ import com.smiletalk.service.inter.UserServiceInter;
 import com.smiletalk.service.inter.UserUniversityServiceInter;
 import com.smiletalk.web.form.UserForm;
 
-/** 
- * MyEclipse Struts
- * Creation date: 01-14-2013
- * 
- * XDoclet definition:
- * @struts.action parameter="flag"
- */
-
   
 public class RegisterAction extends DispatchAction {
 	
@@ -135,7 +127,7 @@ public class RegisterAction extends DispatchAction {
 		
 		//save object
 		
-		
+		request.setAttribute("user", user);	
 		
 		return mapping.findForward("regok");
 	}

@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.upload.FormFile;
 
 import com.smiletalk.domain.City;
 
@@ -42,8 +43,21 @@ public class UserForm extends ActionForm {
 	private String otherCityName;
 	private String otherCountry;
 	
+	//add a recieve university id
+	private String universityId;
+		
+	//add a user type
+	private String userType;
 	
+	//add profile picture
+	private FormFile myphoto;
 	
+	public FormFile getMyphoto() {
+		return myphoto;
+	}
+	public void setMyphoto(FormFile myphoto) {
+		this.myphoto = myphoto;
+	}
 	public String getOtherCityName() {
 		return otherCityName;
 	}
@@ -57,11 +71,7 @@ public class UserForm extends ActionForm {
 		this.otherCountry = otherCountry;
 	}
 	
-	//add a recieve university id
-	private String universityId;
 	
-	//add a user type
-	private String userType;
 	
 	public String getUserType() {
 		return userType;

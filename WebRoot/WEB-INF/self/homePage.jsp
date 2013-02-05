@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -96,59 +96,70 @@ a.feed:active {
 	<body>
 
 		<jsp:include page="head.jsp"></jsp:include>
+		
+		<div style="display:none;">
+		<fmt:formatDate value="${user.birth}" type="date" pattern="yyyy-MM-dd" var="birthday"/>
+		</div>
+		
 		<div class="homePage">
 			<div class="homePage_intro">
 
 				<table>
 					<tr>
 						<td>
-							<img src="/SmileTalk/images/userhead/u1.gif" width="150px" height="150px" />
+						
+						        <c:if test="${user.photo=='default.gif'}">
+							    <img src="/SmileTalk/images/userhead/0000.gif" width="150px" height="150px"/>
+							    </c:if>
+		         				<c:if test="${user.photo!='default.gif'}">
+								<img src="/SmileTalk/images/${user.userId }/head/${user.photo }?abc=<%=Math.random() %>" width="150px" height="150px"/>
+							    </c:if>
 						</td>
 					</tr>
 					<tr>
 						<td onMouseOver="chgTblusers(this)"
 							onMouseOut="chgTblusers2(this)" id="editphoto">
 							&nbsp;
-							<a href="/SmileTalk/profile.do?flag=uploadPhotoUI" class="xh" id="editphotoa">Edit profile picture</a>
+							<a href="/SmileTalk/profile.do?flag=UploadPhotoUI" class="xh" id="editphotoa">Edit profile picture</a>
 						</td>
 					</tr>
 					<tr>
 						<td onMouseOver="chgTblusers(this)"
 							onMouseOut="chgTblusers2(this)" id="edit">
 							&nbsp;
-							<a href="/self/basicInfo.jsp" class="xh" id="edita">Edit Profile</a>
+							<a href="/SmileTalk/profile.do?flag=BasicInfoUI" class="xh" id="edita">Edit Profile</a>
 						</td>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<td onMouseOver="chgTblusers(this)"
 							onMouseOut="chgTblusers2(this)" id="dress">
 							&nbsp;
 							<a href="#" class="xh" id=dressa>Change cover</a>
 						</td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td>
 							&nbsp;
 						</td>
 					</tr>
-					<tr>
+					<!--<tr>
 						<td>
 							&nbsp;
-							<font class="word3">network：</font>VAMK
+							<font class="word3">network：</font>
 						</td>
-					</tr>
+					</tr>-->
 					<tr>
-						<!-- 如果有生日，则显示 -->
+						<!-- if has birthday then show -->
 						<td>
 							&nbsp;
-							<font class="word3">Birthday：</font>1999-11-11
+							<font class="word3">Birthday：</font>
 						</td>
 					</tr>
 					<tr>
 						<!-- if there is hometown then show-->
 						<td>
 							&nbsp;
-							<font class="word3">Hometown：</font> Wuhan, China
+							<font class="word3">Hometown：</font> 
 						</td>
 					</tr>
 					<tr>
@@ -167,7 +178,7 @@ a.feed:active {
 				<!-- current information -->
 				<div class="curInfo">
 					&nbsp;
-					<font class="word2">Liping </font>&nbsp;
+					<font class="word2">${user.name}</font>&nbsp;
 					<img src="/SmileTalk/images/front/star.gif" />
 					&nbsp;
 					<font class="word4">4 visited</font>&nbsp;
@@ -186,7 +197,7 @@ a.feed:active {
 								style="background-color: #FFFFFF; border-bottom-color: #FFFFFF; border-spacing: 5px"
 								align="center">
 								<a href="javascript:void(0);" class="feed" style="color: black;"
-									onclick="opSelf()" id="aSelf">Home Page</a>
+									onclick="opSelf()" id="aSelf">Home</a>
 							</td>
 							<td class="feedsp" id="tdInfo" align="center">
 								<a href="javascript:void(0);" class="feed" onclick="opInfo()"
@@ -367,43 +378,44 @@ a.feed:active {
 								&nbsp;
 							</td>
 						</tr>
-						<tr>
+						<!--<tr>
 							<td>
 								<font class="word4">Network：</font>
 							</td>
 							<td>
 								&nbsp;
 							</td>
-						</tr>
+						</tr>-->
 
 						<tr>
 							<td>
 								<font class="word4">Sex：</font>
 							</td>
 							<td>
-								Female
+								${user.sex}
 							</td>
 						</tr>
 
 						<!-- if there is birthday ，then show -->
+						
 						<tr>
 							<td>
 								<font class="word4">Birthday：</font>
 							</td>
 							<td>
-								1999-11-11
+								${birthday}
 							</td>
 						</tr>
-						<!-- if there is home town，then show -->
+						<!-- if there is home town，then show 
 						<tr>
 							<td>
 								<font class="word4">Hometown：</font>
 							</td>
 							<td>
-								Wuhan China
+								
 							</td>
 						</tr>
-
+                       -->
 					</table>
 					<!-- basic inforamtion end -->
 					<!-- personal interest -->
@@ -422,7 +434,7 @@ a.feed:active {
 								<font class="word4">Interest：</font>
 							</td>
 							<td>
-								Film, traveling, ski
+								${user.interest}
 							</td>
 						</tr>
 						<!-- if like the book -->
@@ -431,7 +443,7 @@ a.feed:active {
 								<font class="word4">Like books：</font>
 							</td>
 							<td>
-								Harry porter
+								${user.book}
 							</td>
 						</tr>
 						<!-- if there is interest music -->
@@ -440,7 +452,7 @@ a.feed:active {
 								<font class="word4">Like music：</font>
 							</td>
 							<td>
-								go west, on your mark,  Beat JP, My Time To Be A Star
+								${user.music}
 							</td>
 						</tr>
 						<!-- if there is interest film -->
@@ -449,7 +461,7 @@ a.feed:active {
 								<font class="word4">Like film：</font>
 							</td>
 							<td>
-								Bad family
+								${user.movie}
 							</td>
 						</tr>
 						<!-- like cartoon -->
@@ -458,7 +470,7 @@ a.feed:active {
 								<font class="word4">Like cartoom：</font>
 							</td>
 							<td>
-								Mummi
+								${user.cartoon}
 							</td>
 						</tr>
 						<!-- Like sport-->
@@ -467,7 +479,7 @@ a.feed:active {
 								<font class="word4">Like sport：</font>
 							</td>
 							<td>
-								swimming
+								${user.sport}
 							</td>
 						</tr>
 						<!-- Like game -->
@@ -476,7 +488,7 @@ a.feed:active {
 								<font class="word4">Like game：</font>
 							</td>
 							<td>
-								WE10, Bloxx It
+								${user.game}
 							</td>
 						</tr>
 						<!--  -->
@@ -485,7 +497,7 @@ a.feed:active {
 								<font class="word4">Students'Association：</font>
 							</td>
 							<td>
-								Vamk
+								
 							</td>
 						</tr>
 					</table>
@@ -515,7 +527,7 @@ a.feed:active {
 								<font class="word4">MSN：</font>
 							</td>
 							<td>
-								guanliping@gmail.com
+								${user.msn}
 							</td>
 						</tr>
 						<!-- mobile -->
@@ -524,7 +536,7 @@ a.feed:active {
 								<font class="word4">phone number：</font>
 							</td>
 							<td>
-								111111111111
+								${user.mobile}
 							</td>
 						</tr>
 						<!-- 
@@ -542,7 +554,7 @@ a.feed:active {
 								<font class="word4">Personal website：</font>
 							</td>
 							<td>
-								http://guanliping.qq.com
+								${user.online}
 							</td>
 						</tr>
 					</table>

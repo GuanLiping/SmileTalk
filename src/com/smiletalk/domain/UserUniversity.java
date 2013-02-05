@@ -13,7 +13,6 @@ public class UserUniversity implements java.io.Serializable {
 	private University university;
 	private Integer uniYear;
 	private String userType;
-	private String college;
 
 	// Constructors
 
@@ -29,12 +28,11 @@ public class UserUniversity implements java.io.Serializable {
 
 	/** full constructor */
 	public UserUniversity(User user, University university, Integer uniYear,
-			String userType, String college) {
+			String userType) {
 		this.user = user;
 		this.university = university;
 		this.uniYear = uniYear;
 		this.userType = userType;
-		this.college = college;
 	}
 
 	// Property accessors
@@ -77,14 +75,6 @@ public class UserUniversity implements java.io.Serializable {
 
 	public void setUserType(String userType) {
 		this.userType = userType;
-	}
-
-	public String getCollege() {
-		return this.college;
-	}
-
-	public void setCollege(String college) {
-		this.college = college;
 	}
 
 }

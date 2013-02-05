@@ -14,13 +14,15 @@
    <div class="main">
        <div class="reg_login">
             <div class="logForm">
+             <form action="/SmileTalk/login.do?flag=login" method="post">
                  <span class="font4">Email:</span><br/>
                  <input type="text" name="email"/><br/>
                  <span class="font4">Password:</span><br/>
-                  <input type="password" name="password"/><br/>
+                  <input type="password" name="pwd"/><br/>
                   <input type="checkbox"/>Keep me log in<br/>
                    <input type="submit" value=" " class="sub"/><br/>
                    <a href="#">Forgot your password?</a>
+               </form>
              </div>         
              <div class="reg">
              <span class="font5">Register</span><br/>

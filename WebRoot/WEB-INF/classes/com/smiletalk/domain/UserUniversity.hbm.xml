@@ -22,8 +22,5 @@
         <property name="userType" type="java.lang.String">
             <column name="userType" length="32" />
         </property>
-        <property name="college" type="java.lang.String">
-            <column name="college" length="128" />
-        </property>
     </class>
 </hibernate-mapping>

@@ -228,7 +228,7 @@ $(document).ready(function(){
 	               </tr>
 	               <tr>
 		                <td class="tab_tb1">Gender:</td>
-		                <td><input type="radio" name="sex"/>Male<input type="radio" name="sex"/>Female</td>
+		                <td><input type="radio" name="sex" value="Male"/>Male<<input type="radio" name="sex" value="Female"/>Female</td>
 		                <td><span class="spanVal" id="span1">Choose your Gender </span></td>
 	               </tr>
 	               <tr>

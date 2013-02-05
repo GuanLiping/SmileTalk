@@ -4,6 +4,7 @@
 <struts-config>
   <form-beans >
     <form-bean name="userForm" type="com.smiletalk.web.form.UserForm" />
+    <form-bean name="albumForm" type="com.smiletalk.web.form.AlbumForm" />
 
   </form-beans>
 
@@ -33,14 +34,58 @@
       <forward name="regUI" path="/WEB-INF/public/register.jsp" />
     </action>
     <action
-      input="/WEB-INF/self/home.jsp"
+      attribute="userForm"
+      input="/WEB-INF/self/basicInfo.jsp"
+      name="userForm"
       parameter="flag"
       path="/profile"
+      scope="request"
       type="com.smiletalk.web.action.ProfileAction"
       validate="false"
-      cancellable="true" >
+      cancellable="true">
+      <forward name="goBasicInfoUI" path="/WEB-INF/self/basicInfo.jsp" />
       <forward name="goHomePageUI" path="/WEB-INF/self/homePage.jsp" />
+      <forward name="goUploadPhotoUI" path="/WEB-INF/self/uploadPhoto.jsp" />
     </action>
+    <action
+      attribute="userForm"
+      input="/WEB-INF/self/homePage.jsp"
+      name="userForm"
+      parameter="flag"
+      path="/login"
+      scope="request"
+      type="com.smiletalk.web.action.LoginAction"
+      validate="false"
+      cancellable="true">
+      
+      <forward name="goIndexUI" path="/WEB-INF/public/index.jsp" />
+      
+      
+      <forward name="logout" path="/WEB-INF/self/home.jsp" />
+      <forward name="goHomeUI" path="/WEB-INF/self/home.jsp" />
+      
+    </action>
+    <action
+      attribute="albumForm"
+      input="/WEB-INF/self/myAlbum.jsp"
+      name="albumForm"
+      parameter="flag"
+      path="/album"
+      scope="request"
+      type="com.smiletalk.web.action.AlbumAction"
+      validate="false"
+      cancellable="true">
+      <forward name="goOnePhotoUI" path="/WEB-INF/self/onePhoto.jsp" />
+      <forward name="goMyAlbumUI" path="/WEB-INF/self/myAlbum.jsp" />
+      <forward name="goOneAlbumUI" path="/WEB-INF/self/oneAlbum.jsp" />
+      <forward name="goAddAlbumUI" path="/WEB-INF/self/addOrChoiceAlblum.jsp" />
+      <forward name="goAddPhotoUI" path="/WEB-INF/self/addPhoto.jsp" />
+    </action>
+
+
+    
+
+
 
 
 

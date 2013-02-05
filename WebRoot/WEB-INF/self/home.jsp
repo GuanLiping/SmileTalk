@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -51,7 +51,7 @@
 								<a href="" class="yy">Photo</a>
 							</td>
 							<td>
-								<a href="#" class="xh" style="color: #808080">upload</a>
+								<a href="/SmileTalk/album.do?flag=myAlbumUI" class="xh" style="color: #808080">upload</a>
 							</td>
 						</tr>
 						<tr>
@@ -109,10 +109,15 @@
 					<table>
 						<tr>
 							<td rowspan="3" width="193px">
-								<img src="/SmileTalk/images/userhead/u1.gif" width="150px" height="150px" />
+							    <c:if test="${user.photo=='default.gif'}">
+							    <img src="/SmileTalk/images/userhead/0000.gif" width="150px" height="150px"/>
+							    </c:if>
+		         				<c:if test="${user.photo!='default.gif'}">
+								<img src="/SmileTalk/images/${user.userId }/head/${user.photo }?abc=<%=Math.random() %>" width="150px" height="150px"/>
+							    </c:if>
 							</td>
 							<td colspan="4" class="word2">
-								Liping
+								${user.name}
 							</td>
 						</tr>
 						<tr>
@@ -143,9 +148,9 @@
 						<tr id="doing" style="display: none;">
 							<td colspan="5">
 								<input type="text" value="doing some thing.." id="udo" size="30" />
-								<input type="submit" value="提交" style="width: 60px" class="sub"
+								<input type="submit" value="submit" style="width: 60px" class="sub"
 									onclick="fdoing()" />
-								<input type="button" value="取消" onclick="hiddenDoing()"
+								<input type="button" value="cancle" onclick="hiddenDoing()"
 									class="button2" />
 							</td>
 						</tr>
@@ -482,7 +487,7 @@
 										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
 								<!-- online then show -->
 								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- 这是该人的生日 -->
+								<span class="word3">11.11<!-- this person's birthday -->
 								</span>
 							</td>
 							<td>
@@ -490,7 +495,7 @@
 										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
 								<!-- online then show -->
 								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- 这是该人的生日 -->
+								<span class="word3">11.11<!-- this person's birthday -->
 								</span>
 							</td>
 							<td>
@@ -498,7 +503,7 @@
 										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
 								<!-- online then show -->
 								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- 这是该人的生日 -->
+								<span class="word3">11.11<!-- this person's birthday -->
 								</span>
 							</td>
 						</tr>
@@ -508,7 +513,7 @@
 										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
 								<!-- online then show -->
 								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- 这是该人的生日 -->
+								<span class="word3">11.11<!-- this person's birthday -->
 								</span>
 							</td>
 							<td>
@@ -516,7 +521,7 @@
 										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
 								<!-- online then show -->
 								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- 这是该人的生日 -->
+								<span class="word3">11.11<!-- this person's birthday -->
 								</span>
 							</td>
 							<td>
@@ -524,7 +529,7 @@
 										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
 								<!-- online then show -->
 								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- 这是该人的生日 -->
+								<span class="word3">11.11<!-- this person's birthday -->
 								</span>
 							</td>
 						</tr>

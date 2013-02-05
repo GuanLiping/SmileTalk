@@ -4,26 +4,90 @@
  */
 package com.smiletalk.web.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.upload.FormFile;
 
-/** 
- * MyEclipse Struts
- * Creation date: 01-23-2013
- * 
- * XDoclet definition:
- * @struts.action parameter="flag"
- */
+import com.smiletalk.domain.User;
+import com.smiletalk.service.inter.UserServiceInter;
+import com.smiletalk.utils.myTools;
+import com.smiletalk.web.form.UserForm;
+
 public class ProfileAction extends DispatchAction {
 	
+	private UserServiceInter userService;
+	
+	
+	
+	public void setUserService(UserServiceInter userService) {
+		this.userService = userService;
+	}
+
 	//jump to self main page
 	public ActionForward goHomePageUI(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		return mapping.findForward("goHomePageUI");
 	}
+	
+	// dump to page upload profile picture
+	public ActionForward UploadPhotoUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		return mapping.findForward("goUploadPhotoUI");
+	}
+	
+	//upload profile picture
+	public ActionForward uploadPhoto(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		UserForm userForm=(UserForm) form;
+		FormFile myphoto=userForm.getMyphoto();
+		User user=(User) request.getSession().getAttribute("user");
+		
+		//save picture to the user's own folder
+		String newHeadPhoto=myTools.uploadHead(request, myphoto, user.getUserId()+"");
+		
+		//modify the name of the user		
+		user.setPhoto(newHeadPhoto);
+		userService.update(user);
+		return mapping.findForward("goUploadPhotoUI");
+	}
+	
+	
+	public ActionForward BasicInfoUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("goBasicInfoUI");
+	}
+	
+	public ActionForward basicInfoUpdate(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		UserForm userForm=(UserForm) form;
+		User user=(User) request.getSession().getAttribute("user");
+		user.setName(userForm.getName());
+		user.setSex(userForm.getSex());
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd"); 
+		
+		java.util.Date date;
+		try {
+			date = sdf.parse(userForm.getBirth());
+			user.setBirth(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+        
+		userService.update(user);
+		return mapping.findForward("goBasicInfoUI");
+	}
+	
 }

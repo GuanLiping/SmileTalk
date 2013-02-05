@@ -28,6 +28,9 @@
 		<mapping resource="com/smiletalk/domain/UserUniversity.hbm.xml" />
 		<mapping resource="com/smiletalk/domain/UserNet.hbm.xml" />
 		<mapping resource="com/smiletalk/domain/AllCity.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/Album.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/Photo.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/PhotoComment.hbm.xml" />
 
 	</session-factory>
 
