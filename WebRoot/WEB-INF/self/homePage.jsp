@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -153,13 +154,15 @@ a.feed:active {
 						<td>
 							&nbsp;
 							<font class="word3">Birthday：</font>
+							${birthday}
 						</td>
 					</tr>
 					<tr>
 						<!-- if there is hometown then show-->
 						<td>
 							&nbsp;
-							<font class="word3">Hometown：</font> 
+							<font class="word3">City：</font> 
+						    ${city}
 						</td>
 					</tr>
 					<tr>
@@ -204,7 +207,7 @@ a.feed:active {
 									id="aInfo">Profile</a>
 							</td>
 							<td class="feedsp" align="center">
-								<a href="/blog.do?type=blog&oid=xx&pageNo=1&year=0&month=0"
+								<a href="/SmileTalk/article.do?flag=myArticleUI"
 									class="feed">Blog</a>
 							</td>
 							<td class="feedsp" align="center">
@@ -249,66 +252,45 @@ a.feed:active {
 						<tr>
 							<td align="left" colspan="3">
 								<font class="STYLE3">Album</font>
-								<a href="/album.do?type=album&oid=xx&pageNo=1" class="xh">（5）</a>
+								<a href="/album.do?type=album&oid=xx&pageNo=1" class="xh">(${fn:length(albumList)})</a>
 							</td>
 							<td align="right">
-								<a href="album.do?type=album&oid=xx&pageNo=1" class="xh">View all Album</a>
+								<a href="album.do?flag=myAlbumUI&oid=xx&pageNo=1" class="xh">View all Album</a>
 							</td>
 						</tr>
+						
+						
 						<tr>
+						<c:forEach var="album" items="${albumList}" varStatus="vs">
+						<c:if test="${vs.count<=4}">
+					             <div style="dispay:none;">
+											   <c:forEach var="eachphoto" items="${album.photos}" varStatus="status">
+											   <c:if test="${status.count==1}">
+											   <c:set var="cover">${eachphoto.PPhoto}</c:set>
+											   </c:if>
+											   </c:forEach>
+								</div>
 							<td>
-								<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
+								<a href="album.do?flag=viewoneAlbum&oid=xx&pageNo=1&aid=${album.alId}"
 									style="border: 1px #D8DFEA solid;" onmouseover="chgImg(this)"
 									onmouseout="chgImg2(this)" id="a100"> <img
-										src="/SmileTalk/images/photos/t4.jpg" width="100px" height="75px"
+										src="/SmileTalk/images/${user.userId }/album/${album.alId }/${cover}" width="100px" height="75px"
 										style="border: 5px #FFFFFF solid;" id="aa100" /> </a>
 								<br />
 								<b> <a
 									href="album.do?type=oneAlbum&oid=|oid|&pageNo=1&aid=|al.getAlId()|"
-									class="xh" style="font-weight: bold;">Album name</a> </b>
+									class="xh" style="font-weight: bold;">${album.alName}</a> </b>
 								<br />
-								<span class="word4">Update on 23.01.2013</span>
+								      <div style="display:none;">
+                                                          <fmt:formatDate value="${album.alUpdate}" type="date" pattern="yyyy-MM-dd" var="updateTime"/>		                                            
+		                                                  <fmt:formatDate value="${album.alIndate}" type="date" pattern="yyyy-MM-dd" var="createTime"/>                                            
+		                              </div>
+								<span class="word4">Update on ${createTime}</span>
 							</td>
+							</c:if>
+							</c:forEach>
 							<!-- show the cycle four album -->
-							<td>
-								<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-									style="border: 1px #D8DFEA solid;" onmouseover="chgImg(this)"
-									onmouseout="chgImg2(this)" id="a100"> <img
-										src="/SmileTalk/images/photos/t4.jpg" width="100px" height="75px"
-										style="border: 5px #FFFFFF solid;" id="aa100" /> </a>
-								<br />
-								<b> <a
-									href="album.do?type=oneAlbum&oid=|oid|&pageNo=1&aid=|al.getAlId()|"
-									class="xh" style="font-weight: bold;">Album name</a> </b>
-								<br />
-								<span class="word4">Update on 10.01.2013</span>
-							</td>
-							<td>
-								<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-									style="border: 1px #D8DFEA solid;" onmouseover="chgImg(this)"
-									onmouseout="chgImg2(this)" id="a100"> <img
-										src="/SmileTalk/images/photos/t4.jpg" width="100px" height="75px"
-										style="border: 5px #FFFFFF solid;" id="aa100" /> </a>
-								<br />
-								<b> <a
-									href="album.do?type=oneAlbum&oid=|oid|&pageNo=1&aid=|al.getAlId()|"
-									class="xh" style="font-weight: bold;">Album name</a> </b>
-								<br />
-								<span class="word4">Update on 12.09.2012</span>
-							</td>
-							<td>
-								<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-									style="border: 1px #D8DFEA solid;" onmouseover="chgImg(this)"
-									onmouseout="chgImg2(this)" id="a100"> <img
-										src="/SmileTalk/images/photos/t4.jpg" width="100px" height="75px"
-										style="border: 5px #FFFFFF solid;" id="aa100" /> </a>
-								<br />
-								<b> <a
-									href="album.do?type=oneAlbum&oid=|oid|&pageNo=1&aid=|al.getAlId()|"
-									class="xh" style="font-weight: bold;">Album name</a> </b>
-								<br />
-								<span class="word4">Update on 12.08.2012</span>
-							</td>
+						
 						</tr>
 					</table>
 				</div>
@@ -320,49 +302,36 @@ a.feed:active {
 						<tr>
 							<td colspan="2">
 								<span class="STYLE3">Bolg</span>
-								<a href="" class="xh">(Blog numbers)</a>
+								<a href="" class="xh">(${fn:length(articleList)})</a>
 							</td>
 							<td align="right">
-								<a href="/blog.do?type=blog&oid=xx&pageNo=1&year=0&month=0"
+								<a href="/SmileTalk/article.do?flag=myArticleUI"
 									class="xh">View all blogs</a>
 							</td>
 						</tr>
+						
+						 
+						<c:forEach var="article" items="${articleList}" varStatus="vs">
+						<c:if test="${vs.count<=3}">
 						<tr>
 							<td style="border-bottom: 1px #D8DFEA solid;">
 								<img src="/SmileTalk/images/front/blog.gif " />
 							</td>
 							<td style="border-bottom: 1px #D8DFEA solid;">
 								<a href="blog.do?type=read&oid=xx>&aid=xx&pageNo=1" class="xh"
-									style="font-weight: bold;">Blog title</a>
+									style="font-weight: bold;">${article.title}</a>
 							</td>
+							<div style="display:none;">                                               
+		                         <fmt:formatDate value="${article.indate}" type="date" pattern="yyyy-MM-dd" var="articlecreateTime"/>                                            
+		                    </div>
 							<td align="right" style="border-bottom: 1px #D8DFEA solid;">
-								<span class="word4">Blog pulish on 2008-11-11</span>
+								<span class="word4">Blog pulish on ${articlecreateTime}</span>
 							</td>
 						</tr>
-						<tr>
-							<td style="border-bottom: 1px #D8DFEA solid;">
-								<img src="/SmileTalk/images/front/blog.gif " />
-							</td>
-							<td style="border-bottom: 1px #D8DFEA solid;">
-								<a href="blog.do?type=read&oid=xx>&aid=xx&pageNo=1" class="xh"
-									style="font-weight: bold;">Blog title</a>
-							</td>
-							<td align="right" style="border-bottom: 1px #D8DFEA solid;">
-								<span class="word4">Blog pulish on 2008-11-11</span>
-							</td>
-						</tr>
-						<tr>
-							<td style="border-bottom: 1px #D8DFEA solid;">
-								<img src="/SmileTalk/images/front/blog.gif " />
-							</td>
-							<td style="border-bottom: 1px #D8DFEA solid;">
-								<a href="blog.do?type=read&oid=xx>&aid=xx&pageNo=1" class="xh"
-									style="font-weight: bold;">Blog title</a>
-							</td>
-							<td align="right" style="border-bottom: 1px #D8DFEA solid;">
-								<span class="word4">Blog pulish on 2008-11-11</span>
-							</td>
-						</tr>
+						</c:if>
+						</c:forEach>
+						
+						
 					</table>
 				</div>
 				<!--blog end-->
@@ -371,7 +340,7 @@ a.feed:active {
 				<div id="myinfo" class="person_info" style="display: none;">
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						<tr>
-							<td width="15%">
+							<td width="20%">
 								<font class="STYLE3">Basic information</font>
 							</td>
 							<td>
@@ -421,7 +390,7 @@ a.feed:active {
 					<!-- personal interest -->
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						<tr>
-							<td width="15%">
+							<td width="20%">
 								<font class="STYLE3">Profile</font>
 							</td>
 							<td>
@@ -467,7 +436,7 @@ a.feed:active {
 						<!-- like cartoon -->
 						<tr>
 							<td>
-								<font class="word4">Like cartoom：</font>
+								<font class="word4">Like cartoon：</font>
 							</td>
 							<td>
 								${user.cartoon}
@@ -491,21 +460,13 @@ a.feed:active {
 								${user.game}
 							</td>
 						</tr>
-						<!--  -->
-						<tr>
-							<td>
-								<font class="word4">Students'Association：</font>
-							</td>
-							<td>
-								
-							</td>
-						</tr>
+						
 					</table>
 					<!-- interest end -->
 					<!-- contact -->
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						<tr>
-							<td width="15%">
+							<td width="20%">
 								<font class="STYLE3">contact</font>
 							</td>
 							<td>
@@ -554,7 +515,7 @@ a.feed:active {
 								<font class="word4">Personal website：</font>
 							</td>
 							<td>
-								${user.online}
+								${user.website}
 							</td>
 						</tr>
 					</table>
@@ -562,22 +523,26 @@ a.feed:active {
 					<!-- school -->
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						<tr>
-							<td width="15%">
+							<td width="20%">
 								<font class="STYLE3">School information</font>
 							</td>
 							<td>
 								&nbsp;
+								
 							</td>
 						</tr>
-
+                        
+                      <!--  <c:if test="${type==''}"> </c:if>-->
 						<tr>
 							<td>
 								<font class="word4">University：</font>
 							</td>
 							<td>
 								&nbsp;
+								${university}
 							</td>
 						</tr>
+						
 						
 					</table>
 					<!-- school end -->

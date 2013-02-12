@@ -6,6 +6,7 @@ package com.smiletalk.web.action;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,17 +16,44 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.upload.FormFile;
 
+import com.smiletalk.domain.City;
+import com.smiletalk.domain.University;
 import com.smiletalk.domain.User;
+import com.smiletalk.domain.UserUniversity;
+import com.smiletalk.service.inter.AlbumServiceInter;
+import com.smiletalk.service.inter.ArticleServiceInter;
+import com.smiletalk.service.inter.CityServiceInter;
+import com.smiletalk.service.inter.UniversityServiceInter;
 import com.smiletalk.service.inter.UserServiceInter;
+import com.smiletalk.service.inter.UserUniversityServiceInter;
 import com.smiletalk.utils.myTools;
 import com.smiletalk.web.form.UserForm;
 
 public class ProfileAction extends DispatchAction {
 	
 	private UserServiceInter userService;
+	private AlbumServiceInter albumService;
+	private ArticleServiceInter articleService;
+	public void setArticleService(ArticleServiceInter articleService) {
+		this.articleService = articleService;
+	}
+
+	private CityServiceInter cityService;
+	private UserUniversityServiceInter userUniversityService;
 	
-	
-	
+	public void setUserUniversityService(
+			UserUniversityServiceInter userUniversityService) {
+		this.userUniversityService = userUniversityService;
+	}
+
+	public void setCityService(CityServiceInter cityService) {
+		this.cityService = cityService;
+	}
+
+	public void setAlbumService(AlbumServiceInter albumService) {
+		this.albumService = albumService;
+	}
+
 	public void setUserService(UserServiceInter userService) {
 		this.userService = userService;
 	}
@@ -33,6 +61,28 @@ public class ProfileAction extends DispatchAction {
 	//jump to self main page
 	public ActionForward goHomePageUI(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		
+		User user=(User) request.getSession().getAttribute("user");
+		
+		City city=(City)cityService.findById(City.class, Integer.valueOf(user.getCity().getCiId()));
+		if(user.getCity().getCiId()==21){
+			request.setAttribute("city", user.getOtherCityName());
+		}else{
+			request.setAttribute("city", city.getCiName());
+		}
+		
+	
+		List userUniversity=userUniversityService.getResult("from UserUniversity where user.userId=?", new Object[]{Integer.valueOf(user.getUserId())});
+		UserUniversity useruniversity=(UserUniversity) userUniversity.get(0);
+		request.setAttribute("university", useruniversity.getUniversity().getName());
+		
+		List albumList=albumService.getResult("from Album where user.userId=?", new Object[]{Integer.valueOf(user.getUserId())});
+		request.setAttribute("albumList", albumList);
+		
+		List articleList=articleService.getResult("from Article where user.userId=?", new Object[]{Integer.valueOf(user.getUserId())});
+		request.setAttribute("articleList", articleList);
 		
 		return mapping.findForward("goHomePageUI");
 	}
@@ -64,6 +114,48 @@ public class ProfileAction extends DispatchAction {
 	public ActionForward BasicInfoUI(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		return mapping.findForward("goBasicInfoUI");
+	}
+	
+	public ActionForward ContactInfoUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("goContactInfoUI");
+	}
+	
+	
+	public ActionForward PersonalInfoUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("goPersonalInfoUI");
+	}
+	
+	
+	public ActionForward contactInfoUpdate(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		UserForm userForm=(UserForm) form;
+		User user=(User) request.getSession().getAttribute("user");
+		
+		user.setBook(userForm.getBook());
+	    
+		userService.update(user);
+		return mapping.findForward("goContactInfoUI");
+	}
+	
+	public ActionForward personalInfoUpdate(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		UserForm userForm=(UserForm) form;
+		User user=(User) request.getSession().getAttribute("user");
+		user.setInterest(userForm.getInterest());
+		user.setBook(userForm.getBook());
+		user.setMusic(userForm.getMusic());
+		user.setMovie(userForm.getMovie());
+		user.setCartoon(userForm.getCartoon());
+		user.setSport(userForm.getSport());
+		user.setGame(userForm.getGame());
+		user.setBook(userForm.getBook());
+	    
+		userService.update(user);
+		return mapping.findForward("goPersonalInfoUI");
 	}
 	
 	public ActionForward basicInfoUpdate(ActionMapping mapping, ActionForm form,

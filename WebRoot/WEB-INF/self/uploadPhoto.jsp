@@ -29,18 +29,18 @@
 														<td class="tblInfo"
 															style="border-left: 1px #898989 solid;">
 															&nbsp;&nbsp;
-															<a href="/self/basicInfo.jsp " class="xh"
+															<a href="/SmileTalk/profile.do?flag=BasicInfoUI " class="xh"
 																style="color: black">Basic info</a>&nbsp;&nbsp;
 														</td>
-														<td class="tblInfo">
+														<td class="tblInfo" >
 															&nbsp;&nbsp;
-															<a href="/self/contactInfo.jsp" class="xh"
-																style="color: black">Contact info</a>&nbsp;&nbsp;
+															<a href="/SmileTalk/profile.do?flag=ContactInfoUI" class="xh"
+																style="color:black">Contact info</a>&nbsp;&nbsp;
 														</td>
 														<td class="tblInfo">
 															&nbsp;&nbsp;
-															<a href="/self/personalInfo.jsp" class="xh"
-																style="color: black">Personal info</a>&nbsp;&nbsp;
+															<a href="/SmileTalk/profile.do?flag=PersonalInfoUI" class="xh"
+																style="color:black">Personal info</a>&nbsp;&nbsp;
 														</td>
 														<td class="tblInfo">
 															&nbsp;&nbsp;

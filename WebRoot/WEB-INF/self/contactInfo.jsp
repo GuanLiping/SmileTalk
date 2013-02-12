@@ -26,16 +26,16 @@
 														<td>
 															&nbsp;&nbsp;
 														</td>
-														<td class="tblInfo" bgcolor="#6D84B4"
+														<td class="tblInfo"
 															style="border-left: 1px #898989 solid;">
 															&nbsp;&nbsp;
 															<a href="/SmileTalk/profile.do?flag=BasicInfoUI " class="xh"
-																style="color: white">Basic info</a>&nbsp;&nbsp;
+																style="color: black">Basic info</a>&nbsp;&nbsp;
 														</td>
-														<td class="tblInfo" >
+														<td class="tblInfo"  bgcolor="#6D84B4">
 															&nbsp;&nbsp;
 															<a href="/SmileTalk/profile.do?flag=ContactInfoUI" class="xh"
-																style="color:black">Contact info</a>&nbsp;&nbsp;
+																style="color:white">Contact info</a>&nbsp;&nbsp;
 														</td>
 														<td class="tblInfo">
 															&nbsp;&nbsp;
@@ -66,36 +66,54 @@
 
 									<tr>
 										<td>
-											<form action="/SmileTalk/profile.do?flag=basicInfoUpdate" method="post">
+											<form action="/SmileTalk/profile.do?flag=contactInfoUpdate" method="post">
 												<table width="100%" border="0" cellspacing="1"
 													cellpadding="10">
 													
 													<tr>
+														  <td valign="top" width="200px">
+															&nbsp;
+															<font class="word2">MSN: </font> 
+														  </td>
+														  <td valign="top">	
+															<input type="text" name="msn" value="${user.msn}"/>
+															<br />
+															&nbsp;
+														  </td>
+												    </tr>
+												    <tr>
 														  <td valign="top">
 															&nbsp;
-															<font class="word2">name: </font> 
-															<input type="text" name="name" value="${user.name}"/>
+															<font class="word2">Phone number: </font> 
+														  </td>
+														  <td valign="top">	
+															<input type="text" name="mobile" value="${user.mobile}"/>
 															<br />
 															&nbsp;
-															<font class="word2">sex: </font>&nbsp;
-															<input type="text" name="sex" value="${user.sex}"/>
+														  </td>
+												    </tr>
+												    <tr>
+														  <td valign="top">
+															&nbsp;
+															<font class="word2">Personal website: </font> 
+														  </td>
+														  <td valign="top">	
+															<input type="text" name="website" value="${user.website}"/>
 															<br />
 															&nbsp;
-															<div style="display:none;">
-															<fmt:formatDate value="${user.birth}" type="date" pattern="yyyy-MM-dd" var="birthday"/>
-															</div>
-															<font class="word2">Birthday: </font> <input type="text" name="birth" value="${birthday}"/>
-															&nbsp;<font class="word3">YYYY-MM-DD</font>
-															<br />
-															
-															
-															<br />
-															<br />
-															&nbsp;&nbsp;
-															<input type="submit" value="update" class="sub" />
-														</td>
-													</tr>
+														  </td>
+												    </tr>
+												    
+													
+												    <tr>
+												      <td></td>
+												      <td>
+												  
+															<input type="submit" value="update" class="sub"/>
+															</td>
+												    </tr>
 												</table>
+												
 											</form>
 										</td>
 									</tr>

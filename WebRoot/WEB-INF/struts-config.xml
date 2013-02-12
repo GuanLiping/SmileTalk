@@ -5,6 +5,7 @@
   <form-beans >
     <form-bean name="userForm" type="com.smiletalk.web.form.UserForm" />
     <form-bean name="albumForm" type="com.smiletalk.web.form.AlbumForm" />
+    <form-bean name="articleForm" type="com.smiletalk.web.form.ArticleForm" />
 
   </form-beans>
 
@@ -35,7 +36,7 @@
     </action>
     <action
       attribute="userForm"
-      input="/WEB-INF/self/basicInfo.jsp"
+      input="/WEB-INF/self/personalInfo.jsp"
       name="userForm"
       parameter="flag"
       path="/profile"
@@ -44,8 +45,10 @@
       validate="false"
       cancellable="true">
       <forward name="goBasicInfoUI" path="/WEB-INF/self/basicInfo.jsp" />
+      <forward name="goPersonalInfoUI" path="/WEB-INF/self/personalInfo.jsp" />
       <forward name="goHomePageUI" path="/WEB-INF/self/homePage.jsp" />
       <forward name="goUploadPhotoUI" path="/WEB-INF/self/uploadPhoto.jsp" />
+      <forward name="goContactInfoUI" path="/WEB-INF/self/contactInfo.jsp" />
     </action>
     <action
       attribute="userForm"
@@ -61,7 +64,7 @@
       <forward name="goIndexUI" path="/WEB-INF/public/index.jsp" />
       
       
-      <forward name="logout" path="/WEB-INF/self/home.jsp" />
+      <forward name="goToMain" path="/WEB-INF/self/home.jsp" />
       <forward name="goHomeUI" path="/WEB-INF/self/home.jsp" />
       
     </action>
@@ -81,6 +84,21 @@
       <forward name="goAddAlbumUI" path="/WEB-INF/self/addOrChoiceAlblum.jsp" />
       <forward name="goAddPhotoUI" path="/WEB-INF/self/addPhoto.jsp" />
     </action>
+    <action
+      attribute="articleForm"
+      input="/WEB-INF/self/myArticle.jsp"
+      name="articleForm"
+      parameter="flag"
+      path="/article"
+      scope="request"
+      type="com.smiletalk.web.action.ArticleAction"
+      validate="false"
+      cancellable="true" >
+      <forward name="goMyArticleUI" path="/WEB-INF/self/myArticle.jsp" />
+      <forward name="goAddArticleUI" path="/WEB-INF/self/addArticle.jsp" />
+      <forward name="goOneArticleUI" path="/WEB-INF/self/oneArticle.jsp" />
+    </action>
+
 
 
     

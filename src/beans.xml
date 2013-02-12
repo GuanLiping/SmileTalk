@@ -44,6 +44,8 @@
 	      <value>com/smiletalk/domain/Album.hbm.xml</value>
 	      <value>com/smiletalk/domain/Photo.hbm.xml</value>
 	      <value>com/smiletalk/domain/PhotoComment.hbm.xml</value>
+	      <value>com/smiletalk/domain/Article.hbm.xml</value>
+	      <value>com/smiletalk/domain/ArticleComment.hbm.xml</value>
 	    </list>
      </property>
      <property name="hibernateProperties">
@@ -79,6 +81,9 @@
 <bean id="albumServiceImpl" class="com.smiletalk.service.impl.AlbumServiceImpl">
 <property name="sessionFactory" ref="sessionFactory"></property>
 </bean>
+<bean id="articleServiceImpl" class="com.smiletalk.service.impl.ArticleServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
 
 <!-- action setting -->
 <bean name="/test" class="com.smiletalk.web.action.TestAction"/>
@@ -91,6 +96,10 @@
 </bean>
 <bean name="/profile" class="com.smiletalk.web.action.ProfileAction">
 <property name="userService" ref="userServiceImpl"/>
+<property name="albumService" ref="albumServiceImpl"/>
+<property name="cityService" ref="cityServiceImpl"/>
+<property name="userUniversityService" ref="userUniversityServiceImpl"/>
+<property name="articleService" ref="articleServiceImpl"/>
 </bean>
 
 <bean name="/login" class="com.smiletalk.web.action.LoginAction">
@@ -99,6 +108,10 @@
 
 <bean name="/album" class="com.smiletalk.web.action.AlbumAction">
 <property name="albumService" ref="albumServiceImpl"/>
+</bean>
+
+<bean name="/article" class="com.smiletalk.web.action.ArticleAction">
+<property name="articleService" ref="articleServiceImpl"/>
 </bean>
 
 <!-- tx Manager -->

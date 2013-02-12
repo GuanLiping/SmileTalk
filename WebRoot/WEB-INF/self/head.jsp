@@ -20,7 +20,7 @@ function changeBG2(o){
 			<img src="/SmileTalk/images/front/top2.jpg" width="253px" height="60px"/>
 			<img src="/SmileTalk/images/front/xnw3.jpg" style="float: left;" />
 			<ul class="home_navi">
-			<li onmouseover="changeBG(this)" onmouseout="changeBG2(this)"><a class="top" href="/SmileTalk/login.do?flag=logout">Main</a></li>
+			<li onmouseover="changeBG(this)" onmouseout="changeBG2(this)"><a class="top" href="/SmileTalk/login.do?flag=logtoMain">Main</a></li>
 			<li onmouseover="changeBG(this)" onmouseout="changeBG2(this)"><a class="top" href="/SmileTalk/profile.do?flag=goHomePageUI">Home</a></li>
 			<li onmouseover="changeBG(this)" onmouseout="changeBG2(this)"><a class="top" href="#">Setting</a></li>
 			<li onmouseover="changeBG(this)" onmouseout="changeBG2(this)"><a class="top" href="#">Friends</a></li>

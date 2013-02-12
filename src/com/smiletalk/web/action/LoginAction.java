@@ -24,11 +24,11 @@ public class LoginAction extends DispatchAction {
 		this.userService = userService;
 	}
 
-	public ActionForward logout(ActionMapping mapping, ActionForm form,
+	public ActionForward logtoMain(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		//request.getSession().invalidate();
-		return mapping.findForward("logout");
+		return mapping.findForward("goToMain");
 		
 	}
 

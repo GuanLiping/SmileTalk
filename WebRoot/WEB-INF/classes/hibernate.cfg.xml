@@ -31,6 +31,8 @@
 		<mapping resource="com/smiletalk/domain/Album.hbm.xml" />
 		<mapping resource="com/smiletalk/domain/Photo.hbm.xml" />
 		<mapping resource="com/smiletalk/domain/PhotoComment.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/Article.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/ArticleComment.hbm.xml" />
 
 	</session-factory>
 

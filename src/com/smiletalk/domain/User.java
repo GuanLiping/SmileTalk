@@ -43,8 +43,16 @@ public class User implements java.io.Serializable {
 	private String otherCityName;
 	private Set userUniversities = new HashSet(0);
 	private Set userNets = new HashSet(0);
+	private Set albums = new HashSet(0);
+	private Set articles = new HashSet(0);
+	private Set articleComments = new HashSet(0);
 	private Set userUniversities_1 = new HashSet(0);
 	private Set userNets_1 = new HashSet(0);
+	private Set photoComments = new HashSet(0);
+	private Set photoComments_1 = new HashSet(0);
+	private Set articles_1 = new HashSet(0);
+	private Set albums_1 = new HashSet(0);
+	private Set articleComments_1 = new HashSet(0);
 
 	// Constructors
 
@@ -68,7 +76,10 @@ public class User implements java.io.Serializable {
 			String assn, Integer visited, String doing, Short online,
 			Date registerDate, Date loginDate, Short level, Short locked,
 			String otherCountry, String otherCityName, Set userUniversities,
-			Set userNets, Set userUniversities_1, Set userNets_1) {
+			Set userNets, Set albums, Set articles, Set articleComments,
+			Set userUniversities_1, Set userNets_1, Set photoComments,
+			Set photoComments_1, Set articles_1, Set albums_1,
+			Set articleComments_1) {
 		this.city = city;
 		this.email = email;
 		this.name = name;
@@ -99,8 +110,16 @@ public class User implements java.io.Serializable {
 		this.otherCityName = otherCityName;
 		this.userUniversities = userUniversities;
 		this.userNets = userNets;
+		this.albums = albums;
+		this.articles = articles;
+		this.articleComments = articleComments;
 		this.userUniversities_1 = userUniversities_1;
 		this.userNets_1 = userNets_1;
+		this.photoComments = photoComments;
+		this.photoComments_1 = photoComments_1;
+		this.articles_1 = articles_1;
+		this.albums_1 = albums_1;
+		this.articleComments_1 = articleComments_1;
 	}
 
 	// Property accessors
@@ -353,6 +372,30 @@ public class User implements java.io.Serializable {
 		this.userNets = userNets;
 	}
 
+	public Set getAlbums() {
+		return this.albums;
+	}
+
+	public void setAlbums(Set albums) {
+		this.albums = albums;
+	}
+
+	public Set getArticles() {
+		return this.articles;
+	}
+
+	public void setArticles(Set articles) {
+		this.articles = articles;
+	}
+
+	public Set getArticleComments() {
+		return this.articleComments;
+	}
+
+	public void setArticleComments(Set articleComments) {
+		this.articleComments = articleComments;
+	}
+
 	public Set getUserUniversities_1() {
 		return this.userUniversities_1;
 	}
@@ -367,6 +410,46 @@ public class User implements java.io.Serializable {
 
 	public void setUserNets_1(Set userNets_1) {
 		this.userNets_1 = userNets_1;
+	}
+
+	public Set getPhotoComments() {
+		return this.photoComments;
+	}
+
+	public void setPhotoComments(Set photoComments) {
+		this.photoComments = photoComments;
+	}
+
+	public Set getPhotoComments_1() {
+		return this.photoComments_1;
+	}
+
+	public void setPhotoComments_1(Set photoComments_1) {
+		this.photoComments_1 = photoComments_1;
+	}
+
+	public Set getArticles_1() {
+		return this.articles_1;
+	}
+
+	public void setArticles_1(Set articles_1) {
+		this.articles_1 = articles_1;
+	}
+
+	public Set getAlbums_1() {
+		return this.albums_1;
+	}
+
+	public void setAlbums_1(Set albums_1) {
+		this.albums_1 = albums_1;
+	}
+
+	public Set getArticleComments_1() {
+		return this.articleComments_1;
+	}
+
+	public void setArticleComments_1(Set articleComments_1) {
+		this.articleComments_1 = articleComments_1;
 	}
 
 }
