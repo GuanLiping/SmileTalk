@@ -58,14 +58,14 @@
 									</td>
 									<td>
 										<a href="album.do?type=album&pageNo=1&oid=xx" class="xh">
-											<< 1 </a>
+											 </a>
 									</td>
 									<td>
-										...
+										
 									</td>
 									<td>
 										<a href="album.do?type=album&pageNo=xx&oid=xx" class="xh">
-											< Last</a>
+											</a>
 									</td>
 								</tr>
 							</table>
@@ -91,7 +91,7 @@
 														cellpadding="1">
 														<tr>
 															<td>
-																<a href="article.do?flag=viewoneArticle&oid=xx&pageNo=1&aid=xx"
+																<a href="article.do?flag=viewoneBlog&bid=${article.articleId}"
 																	class="xh" style="font-weight: bold; font-size: 16px">${article.title}          
 																</a>
 															</td>
@@ -112,9 +112,9 @@
 														
 														<tr>
 															<td>
-																<a href="/xiaonei/editAlbum.jsp?aid=xxx" class="xh">Edit Blog</a>
+																<a href="article.do?flag=editoneBlog&bid=${article.articleId}" class="xh">Edit Blog</a>
 																|
-																<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
+																<a href="article.do?flag=viewoneBlog&bid=${article.articleId}"
 																	class="xh">View Blog</a>
 															</td>
 														</tr>
@@ -151,14 +151,14 @@
 									</td>
 									<td>
 										<a href="album.do?type=album&pageNo=1&oid=xx" class="xh">
-											<< 1  </a>
+											  </a>
 									</td>
 									<td>
-										...
+										
 									</td>
 									<td>
 										<a href="album.do?type=album&pageNo=xx&oid=xx" class="xh">
-											< Last</a>
+											</a>
 									</td>
 								</tr>
 							</table>

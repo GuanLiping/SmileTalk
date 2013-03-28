@@ -102,9 +102,11 @@ public class RegisterAction extends DispatchAction {
 		user.setPwd(userForm.getPwd());
 		user.setRegisterDate(new java.util.Date());
 		user.setSex(userForm.getSex());
+		user.setPhoto("default.gif");
         user.setOtherCountry(userForm.getOtherCountry());
 		//get city form user
 		City city=(City)cityService.findById(City.class, Integer.valueOf(userForm.getCityId()));
+		//request.setAttribute("cityID", userForm.getCityId());	
 		
 		if(Integer.valueOf(userForm.getCityId())==21){
 			user.setOtherCityName(userForm.getOtherCityName());
@@ -125,10 +127,8 @@ public class RegisterAction extends DispatchAction {
 		userUniversityService.save(useruniversity);
 		}
 		
-		//save object
-		
-		request.setAttribute("user", user);	
-		
+		//save object		
+		request.getSession().setAttribute("user", user);			
 		return mapping.findForward("regok");
 	}
 

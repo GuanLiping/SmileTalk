@@ -113,7 +113,7 @@ a.feed:active {
 							    <img src="/SmileTalk/images/userhead/0000.gif" width="150px" height="150px"/>
 							    </c:if>
 		         				<c:if test="${user.photo!='default.gif'}">
-								<img src="/SmileTalk/images/${user.userId }/head/${user.photo }?abc=<%=Math.random() %>" width="150px" height="150px"/>
+								<img src="/SmileTalk/images/${user.userId }/head/${user.photo}?abc=<%=Math.random() %>" width="150px" height="150px"/>
 							    </c:if>
 						</td>
 					</tr>
@@ -184,9 +184,9 @@ a.feed:active {
 					<font class="word2">${user.name}</font>&nbsp;
 					<img src="/SmileTalk/images/front/star.gif" />
 					&nbsp;
-					<font class="word4">4 visited</font>&nbsp;
-					<font class="word3">doing nothing here </font>&nbsp;
-					<a href="#" class="xh">edit</a>
+					<font class="word4"></font>&nbsp;
+					<font class="word3"> </font>&nbsp;
+					
 				</div>
 				<!-- choose your operation -->
 				<div class="opers">
@@ -213,9 +213,7 @@ a.feed:active {
 							<td class="feedsp" align="center">
 								<a href="/SmileTalk/album.do?flag=myAlbumUI" class="feed">Album</a>
 							</td>
-							<td class="feedsp" align="center">
-								<a href="#" class="feed">Application</a>
-							</td>
+							
 							<td width="40%">
 								&nbsp;
 							</td>
@@ -252,7 +250,7 @@ a.feed:active {
 						<tr>
 							<td align="left" colspan="3">
 								<font class="STYLE3">Album</font>
-								<a href="/album.do?type=album&oid=xx&pageNo=1" class="xh">(${fn:length(albumList)})</a>
+								<a href="/SmileTalk/album.do?flag=myAlbumUI" class="xh">(${fn:length(albumList)})</a>
 							</td>
 							<td align="right">
 								<a href="album.do?flag=myAlbumUI&oid=xx&pageNo=1" class="xh">View all Album</a>
@@ -269,7 +267,7 @@ a.feed:active {
 											   <c:set var="cover">${eachphoto.PPhoto}</c:set>
 											   </c:if>
 											   </c:forEach>
-								</div>
+								 </div>
 							<td>
 								<a href="album.do?flag=viewoneAlbum&oid=xx&pageNo=1&aid=${album.alId}"
 									style="border: 1px #D8DFEA solid;" onmouseover="chgImg(this)"
@@ -285,7 +283,7 @@ a.feed:active {
                                                           <fmt:formatDate value="${album.alUpdate}" type="date" pattern="yyyy-MM-dd" var="updateTime"/>		                                            
 		                                                  <fmt:formatDate value="${album.alIndate}" type="date" pattern="yyyy-MM-dd" var="createTime"/>                                            
 		                              </div>
-								<span class="word4">Update on ${createTime}</span>
+								<span class="word4">Update on ${updateTime}</span>
 							</td>
 							</c:if>
 							</c:forEach>
@@ -302,7 +300,7 @@ a.feed:active {
 						<tr>
 							<td colspan="2">
 								<span class="STYLE3">Bolg</span>
-								<a href="" class="xh">(${fn:length(articleList)})</a>
+								<a href="/SmileTalk/article.do?flag=myArticleUI" class="xh">(${fn:length(articleList)})</a>
 							</td>
 							<td align="right">
 								<a href="/SmileTalk/article.do?flag=myArticleUI"
@@ -318,7 +316,7 @@ a.feed:active {
 								<img src="/SmileTalk/images/front/blog.gif " />
 							</td>
 							<td style="border-bottom: 1px #D8DFEA solid;">
-								<a href="blog.do?type=read&oid=xx>&aid=xx&pageNo=1" class="xh"
+								<a href="article.do?flag=viewoneBlog&bid=${article.articleId}" class="xh"
 									style="font-weight: bold;">${article.title}</a>
 							</td>
 							<div style="display:none;">                                               
@@ -554,84 +552,71 @@ a.feed:active {
 
 				<!-- message start -->
 				<div class="guessbook">
+					<form action="/SmileTalk/gossip.do?flag=selfAddGossip&gid=${user.userId}" method="post">
+							
 					<table>
 						<tr>
 							<td>
 								<span class="STYLE3">Comment board</span>
 							</td>
 							<td align="right">
-								<a href="profile.do?type=gossip&oid=xxx&pageNo=1" class="xh">All comments</a>
+								<a href="/SmileTalk/gossip.do?flag=viewAllGossip&type=self" class="xh">All comments</a>
 							</td>
 						</tr>
+						
+									
 						<tr>
 							<td colspan="2">
-								<textarea style="width: 500px; font-size: 12px" id="cont"></textarea>
+								<textarea style="width: 500px; font-size: 12px" id="cont" name="content"></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input class="sub" value="Message" type="button"
-									onclick="addGossip()" style="width: 60px" />
+								<input class="sub" value="Message" type="submit"
+									  style="width: 80px" />
 								<font class="word3">（Max 2000 words）</font>
 							</td>
 							<td></td>
-						</tr>
+						</tr>				
 					</table>
+					</form>	
 				</div>
 				<!-- message end -->
 				<!-- message content ，max 10-->
+				<c:forEach var="gossip" items="${gossipList}" varStatus="vs">
+			    <c:if test="${vs.count<=3}">
+				
 				<div class="mess_con">
 					<table>
 						<tr>
 							<td rowspan="2" width="8%">
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" /> </a>
+								<a href="friend.do?flag=viewFriend&fid=${gossip.user.userId}"> <img
+										src="/SmileTalk/images/${gossip.user.userId}/head/${gossip.user.photo}" width="50px" height="50px" /> </a>
 							</td>
 							<td>
-								<a href="profile.do?type=feed&oid=xx" class="xh">guan</a>
-								(Vamk)&nbsp;
-								<font class="word3">message time 2001-11-11 17:44</font>
+								<a href="friend.do?flag=viewFriend&fid=${gossip.user.userId}" class="xh">${gossip.user.name}</a>
+								&nbsp;
+								 <fmt:formatDate value="${gossip.indate}" type="date" pattern="yyyy-MM-dd hh:mm:ss" var="gossipcreateTime"/>                                            		                 
+								<font class="word3">message time ${gossipcreateTime}</font>
 							</td>
 							<td>
-								<a href="javascript:void(0);" class="xh" id="xx"
-									onclick="delgossip(this)">Delete</a>
+								 <a href="/SmileTalk/gossip.do?flag=deleteGossip&id=${gossip.id}" class="xh" id="xx">Delete</a>
 							</td>
 						</tr>
 						<tr>
 							<td rowspan="2">
-								message content
+								${gossip.content}
 							</td>
 						</tr>
 					</table>
 				</div>
+				
+				</c:if>
+				</c:forEach>
 				<!-- message content end -->
-				<!-- message content，max 10 -->
-				<div class="mess_con">
-					<table>
-						<tr>
-							<td rowspan="2" width="8%">
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" /> </a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx" class="xh">guan</a>
-								(Vamk)&nbsp;
-								<font class="word3">message time 2001-11-11 17:44</font>
-							</td>
-							<td>
-								<a href="javascript:void(0);" class="xh" id="xx"
-									onclick="delgossip(this)">Delete</a>
-							</td>
-						</tr>
-						<tr>
-							<td rowspan="2">
-								message content
-							</td>
-						</tr>
-					</table>
-				</div>
+				
 				<p style="float: right; margin: 15px 10px 0 auto">
-					<a href="#">View all message >></a>
+					<a href="/SmileTalk/gossip.do?flag=viewAllGossip">View all message >></a>
 				</p>
 			</div>
 			<div class="friend_last">
@@ -639,95 +624,58 @@ a.feed:active {
 				<div class="special_friend">
 					<table>
 						<tr>
-							<td style="line-height: 27px">
+							<td style="line-height: 27px; width:80%;">
 								<font class="STYLE3">Special friend</font>
 							</td>
 							<td>
-
-							</td>
+							</td> 
 							<td align="right">
-								<a href="friend.do?type=hot" class="xh">Edit</a>
+								<a href="/SmileTalk/friend.do?flag=goAllFriend" class="xh">Edit</a>
 							</td>
 						</tr>
+						<c:forEach var="friend" items="${friendList}" varStatus="vs">
+						<c:if test="${friend.type==1}">
 						<tr>
 							<td>
-								<a href="profile.do?type=feed&oid=xxx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" />
+								<a href="friend.do?flag=viewFriend&fid=${friend.user.userId}"> <img
+										src="/SmileTalk/images/${friend.user.userId}/head/${friend.user.photo}" width="50px" height="50px" />				
 								</a>
+								<a href="friend.do?flag=viewFriend&fid=${friend.user.userId}" class="xh">${friend.user.name}</a>
 							</td>
 							<td>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Daani</a>
+								
 							</td>
 							<td>
-								<font class="word4">Good sister!</font>
+								<font class="word4">${friend.description}</font>
 							</td>
 						</tr>
+						</c:if>
+						</c:forEach>
 					</table>
 				</div>
 				<!-- special freind end -->
-				<!-- recient visit -->
-				<div class="last_visit">
-					<table>
-						<tr>
-							<td align="left" style="line-height: 27px" colspan="3">
-								<font class="STYLE3">Recient visit</font>
-							</td>
-							
-						</tr>
-						<tr>
-							<td>
-								<a href="profile.do?type=feed&oid=xxx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" />
-								</a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">dd</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xxx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" />
-								</a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">dd</a>
-							</td>
-							<td>
-							<a href="profile.do?type=feed&oid=xxx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" />
-								</a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">dd</a>
-							
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!-- recent visit end -->
+				
 				<!-- friend start -->
 				<!-- freind -->
 				<div class="good_friend">
 					<table>
 						<tr>
 							<td align="left" style="line-height: 27px" colspan="3">
-								<font class="STYLE3">freind(11)</font>
+								<font class="STYLE3">freind(${fn:length(friendList)})</font>
 							</td>
 							
 						</tr>
 						<tr>
-							<td>
-								<a href="profile.do?type=feed&oid=xxx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" />
+						   <c:forEach var="friend" items="${friendList}" varStatus="vs">
+						   <c:if test="${vs.count<=3}">
+							    <td>
+								<a href="friend.do?flag=viewFriend&fid=${friend.user.userId}"> <img
+										src="/SmileTalk/images/${friend.user.userId}/head/${friend.user.photo}" width="50px" height="50px" />				
 								</a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">dd</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xxx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" />
-								</a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">dd</a>
-							</td>
-							<td>
-							<a href="profile.do?type=feed&oid=xxx"> <img
-										src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" />
-								</a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">dd</a>
-							
-							</td>
+								<a href="friend.do?flag=viewFriend&fid=${friend.user.userId}" class="xh">${friend.user.name}</a>
+							    </td>
+						    </c:if>
+						    </c:forEach>					
 						</tr>
 					</table>
 				</div>

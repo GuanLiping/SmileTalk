@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -42,16 +42,8 @@
 															<a href="/SmileTalk/profile.do?flag=PersonalInfoUI" class="xh"
 																style="color:black">Personal info</a>&nbsp;&nbsp;
 														</td>
-														<td class="tblInfo">
-															&nbsp;&nbsp;
-															<a href="getReady.do?type=edu" class="xh"
-																style="color: black">Education info</a>&nbsp;&nbsp;
-														</td>
-														<td class="tblInfo">
-															&nbsp;&nbsp;
-															<a href="/self/myWorkInfo.jsp" class="xh"
-																style="color: black">Work info</a>&nbsp;&nbsp;
-														</td>
+														
+														
 														<td class="tblInfo" bgcolor="#6D84B4">
 															&nbsp;&nbsp;
 															<a href="/self/upload.jsp" class="xh"
@@ -85,8 +77,13 @@
 															&nbsp;
 															<font class="word3">You can choose from your <a href="" class="xh">profile alum</a> as profile picture</font>
 															<br />
-															<img src="/SmileTalk/images/${user.userId }/head/${user.photo }?abc=<%=Math.random() %>" width="200"
+															<c:if test="${user.photo=='default.gif'}">
+															    <img src="/SmileTalk/images/userhead/0000.gif" width="150px" height="150px"/>
+															    </c:if>
+										         				<c:if test="${user.photo!='default.gif'}">
+															<img src="/SmileTalk/images/${user.userId }/head/${user.photo}?abc=<%=Math.random() %>" width="200"
 																height="200" />
+																</c:if>
 														</td>
 														<td valign="top">
 															&nbsp;

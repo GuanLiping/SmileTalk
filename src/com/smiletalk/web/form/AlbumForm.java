@@ -21,6 +21,14 @@ public class AlbumForm extends ActionForm {
 	private String descript;
 	private String whoSee;
 	
+	private String photoComment;
+	
+	public String getPhotoComment() {
+		return photoComment;
+	}
+	public void setPhotoComment(String photoComment) {
+		this.photoComment = photoComment;
+	}
 	//album name
 	private String photoName;
 	//photo formfile name

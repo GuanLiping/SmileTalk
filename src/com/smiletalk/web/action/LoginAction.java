@@ -4,6 +4,8 @@
  */
 package com.smiletalk.web.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -12,26 +14,63 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import com.smiletalk.domain.User;
+import com.smiletalk.service.inter.FriendServiceInter;
+import com.smiletalk.service.inter.NewsCommentServiceInter;
+import com.smiletalk.service.inter.NewsServiceInter;
 import com.smiletalk.service.inter.UserServiceInter;
 import com.smiletalk.web.form.UserForm;
 
 public class LoginAction extends DispatchAction {
 	
 	private UserServiceInter userService; 
+	private NewsServiceInter newsService;
+	private FriendServiceInter friendService;
+	private NewsCommentServiceInter newsCommentService;
 	
 	
+	public void setNewsCommentService(NewsCommentServiceInter newsCommentService) {
+		this.newsCommentService = newsCommentService;
+	}
+
+	public void setFriendService(FriendServiceInter friendService) {
+		this.friendService = friendService;
+	}
+
+	public void setNewsService(NewsServiceInter newsService) {
+		this.newsService = newsService;
+	}
+
 	public void setUserService(UserServiceInter userService) {
 		this.userService = userService;
 	}
 
 	public ActionForward logtoMain(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
+	
+		User user=(User) request.getSession().getAttribute("user");
 		
-		//request.getSession().invalidate();
+		List newsList=newsService.getResult("from News where 1=? order by id desc", new Object[]{1});
+		request.setAttribute("newsList", newsList);
+			
+		
+		List peopleList=userService.getResult("from User where userId <> ?", new Object[]{Integer.valueOf(user.getUserId())});
+		request.setAttribute("peopleList", peopleList);
+		
+		List friendList=friendService.getResult("from Friend where hostId=?", new Object[]{Integer.valueOf(user.getUserId())});
+		request.setAttribute("friendList", friendList);
+		
 		return mapping.findForward("goToMain");
 		
 	}
-
+	
+	
+	public ActionForward logtoOut(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		request.getSession().invalidate();
+		return mapping.findForward("goToIndex");
+		
+	}
 	public ActionForward login(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		UserForm userForm = (UserForm) form;// TODO Auto-generated method stub
@@ -41,14 +80,23 @@ public class LoginAction extends DispatchAction {
 		// in MVC mode
 		User user=new User();
 		
-		//System.out.println(userForm.getEmail()+"  "+userForm.getPwd());
-		
 		user.setEmail(userForm.getEmail());
 		user.setPwd(userForm.getPwd());
 		user=userService.check(user);
 		if(user!=null){
 			//legal and save user to bean
-			request.getSession().setAttribute("user", user);		
+			request.getSession().setAttribute("user", user);
+			
+			List newsList=newsService.getResult("from News where 1=? order by id desc", new Object[]{1});
+			request.setAttribute("newsList", newsList);
+				
+			
+			List peopleList=userService.getResult("from User where userId <> ?", new Object[]{Integer.valueOf(user.getUserId())});
+			request.setAttribute("peopleList", peopleList);
+			
+			List friendList=friendService.getResult("from Friend where hostId=?", new Object[]{Integer.valueOf(user.getUserId())});
+			request.setAttribute("friendList", friendList);
+			
 			return mapping.findForward("goHomeUI");
 		}else{
 			//illegal

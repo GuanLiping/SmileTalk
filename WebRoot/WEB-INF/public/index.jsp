@@ -19,9 +19,9 @@
                  <input type="text" name="email"/><br/>
                  <span class="font4">Password:</span><br/>
                   <input type="password" name="pwd"/><br/>
-                  <input type="checkbox"/>Keep me log in<br/>
+                  <br/>
                    <input type="submit" value=" " class="sub"/><br/>
-                   <a href="#">Forgot your password?</a>
+                   
                </form>
              </div>         
              <div class="reg">

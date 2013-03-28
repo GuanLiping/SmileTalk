@@ -18,8 +18,11 @@ import org.apache.struts.upload.FormFile;
 
 import com.smiletalk.domain.Album;
 import com.smiletalk.domain.Photo;
+import com.smiletalk.domain.PhotoComment;
 import com.smiletalk.domain.User;
 import com.smiletalk.service.inter.AlbumServiceInter;
+import com.smiletalk.service.inter.PhotoCommentServiceInter;
+import com.smiletalk.service.inter.UserServiceInter;
 import com.smiletalk.utils.myTools;
 import com.smiletalk.web.form.AlbumForm;
 
@@ -33,7 +36,20 @@ import com.smiletalk.web.form.AlbumForm;
 public class AlbumAction extends DispatchAction {
 	
 	private AlbumServiceInter albumService;
+	private UserServiceInter userService;
+	private PhotoCommentServiceInter photoCommentService;
 	
+	
+	public void setPhotoCommentService(PhotoCommentServiceInter photoCommentService) {
+		this.photoCommentService = photoCommentService;
+	}
+
+
+	public void setUserService(UserServiceInter userService) {
+		this.userService = userService;
+	}
+
+
 	public ActionForward myAlbumUI(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
@@ -46,11 +62,107 @@ public class AlbumAction extends DispatchAction {
 		return mapping.findForward("goMyAlbumUI");
 	}
 	
+	
+	public ActionForward friendAlbumUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		String fid=request.getParameter("fid");
+		
+		List albumList=albumService.getResult("from Album where user.userId=?", new Object[]{Integer.valueOf(fid)});
+		request.setAttribute("albumList", albumList);
+		
+		 User user=(User) userService.findById(User.class, Integer.valueOf(fid));
+		 request.setAttribute("user", user);
+		
+		return mapping.findForward("goFriendAlbumUI");
+	}
+	
+	
+	public ActionForward viewFriendOneAlbum(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		String aid=request.getParameter("aid");
+		String fid=request.getParameter("fid");
+		
+		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(aid)});
+		request.setAttribute("photoList", photoList);
+		
+		Album album=new Album();
+		album=(Album)albumService.findById(Album.class, Integer.valueOf(aid));
+		request.setAttribute("album", album);
+		
+		User user=(User) userService.findById(User.class, Integer.valueOf(fid));
+		request.setAttribute("user", user);
+		
+		return mapping.findForward("goFriendOneAlbumUI");
+	}
+	
+	
+	public ActionForward friendOnePhotoUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		String uid=request.getParameter("uid");
+		String aid=request.getParameter("aid");
+		String pid=request.getParameter("pid");
+		String pP=request.getParameter("pP");
+				
+		request.setAttribute("uid",uid);
+		request.setAttribute("pid",pid);
+		request.setAttribute("aid",aid);
+		request.setAttribute("pP",pP);
+		
+		Album album=new Album();
+		album=(Album)albumService.findById(Album.class, Integer.valueOf(aid));
+		request.setAttribute("album", album);
+		
+		List photoCommentList=photoCommentService.getResult("from PhotoComment where photo.PId=?", new Object[]{Integer.valueOf(pid)});
+		request.setAttribute("photoCommentList", photoCommentList);
+		
+		
+		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(aid)});
+		request.setAttribute("photoList", photoList);
+		
+		for(int i=0;i<photoList.size();i++){
+		    Photo p=(Photo)photoList.get(i);		    
+		    if(p.getPId()==Integer.parseInt(pid)){
+		    	request.setAttribute("count",i+1);
+				request.setAttribute("photo",p);	    	
+		    }		    		
+		}
+		
+		User user=(User) userService.findById(User.class, Integer.valueOf(uid));
+		request.setAttribute("user", user);
+				
+		
+		return mapping.findForward("goFriendOnePhotoUI");
+	}
+	
 	public ActionForward addAlbumUI(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		User user=(User) request.getSession().getAttribute("user");
+		
+		List albumList=albumService.getResult("from Album where user.userId=?", new Object[]{Integer.valueOf(user.getUserId())});
+		request.setAttribute("albumList", albumList);	
+		
 		return mapping.findForward("goAddAlbumUI");
 	}
+	
+	
+	public ActionForward addMorePhotoUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		String aid=request.getParameter("aid");
+	
+		Album album=new Album();
+		album=(Album)albumService.findById(Album.class, Integer.valueOf(aid));
+		album.setAlUpdate(new Date());
+		request.setAttribute("album", album);
+		
+		return mapping.findForward("goAddPhotoUI");
+	}
+		
+	
 	
 	public ActionForward addPhotoUI(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -79,11 +191,17 @@ public class AlbumAction extends DispatchAction {
 		// TODO Auto-generated method stub
 		
 		String aid=request.getParameter("aid");
+		Album album=new Album();
+		album=(Album)albumService.findById(Album.class, Integer.valueOf(aid));
+		request.setAttribute("album", album);
+		
 		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(aid)});
 		request.setAttribute("photoList", photoList);
 		
 		return mapping.findForward("goOneAlbumUI");
 	}
+	
+	
 	
 
 	public ActionForward oneAlbumUI(ActionMapping mapping, ActionForm form,
@@ -159,6 +277,11 @@ public class AlbumAction extends DispatchAction {
 		//photo to be shown to the list 
 		//Album curAlbum=(Album) albumService.findById(Album.class,Integer.valueOf(albumForm.getId()) );
 		//Set photoList=  curAlbum.getPhotos();
+		
+		Album album=new Album();
+		album=(Album)albumService.findById(Album.class, Integer.valueOf(albumForm.getId()));
+		request.setAttribute("album", album);
+		
 		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(albumForm.getId())});
 		request.setAttribute("photoList", photoList);
 		
@@ -171,17 +294,252 @@ public class AlbumAction extends DispatchAction {
 		// TODO Auto-generated method stub
 		
 		String uid=request.getParameter("uid");
+		String aid=request.getParameter("aid");
 		String pid=request.getParameter("pid");
 		String pP=request.getParameter("pP");
 		
+		List photoCommentList=photoCommentService.getResult("from PhotoComment where photo.PId=?", new Object[]{Integer.valueOf(pid)});
+		request.setAttribute("photoCommentList", photoCommentList);
 		
+		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(aid)});
+		request.setAttribute("photoList", photoList);
+		
+		for(int i=0;i<photoList.size();i++){
+		    Photo p=(Photo)photoList.get(i);		    
+		    if(p.getPId()==Integer.parseInt(pid)){
+		    	request.setAttribute("count",i+1);
+				request.setAttribute("photo",p);	    	
+		    }		    		
+		}
 		
 		request.setAttribute("uid",uid);
+		request.setAttribute("aid",aid);
 		request.setAttribute("pid",pid);
 		request.setAttribute("pP",pP);
 				
 		return mapping.findForward("goOnePhotoUI");
 	}
+	
+	
+	
+	public ActionForward deletePhotoComment(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String uid=request.getParameter("uid");
+		String aid=request.getParameter("aid");
+		String pid=request.getParameter("pid");
+		String pP=request.getParameter("pP");
+		
+		
+		String id=request.getParameter("id");		
+		PhotoComment pc=(PhotoComment)photoCommentService.findById(PhotoComment.class, Integer.valueOf(id));
+		photoCommentService.delete(pc);
+		
+		
+		List photoCommentList=photoCommentService.getResult("from PhotoComment where photo.PId=?", new Object[]{Integer.valueOf(pid)});
+		request.setAttribute("photoCommentList", photoCommentList);
+		
+		request.setAttribute("uid",uid);
+		request.setAttribute("aid",aid);
+		request.setAttribute("pid",pid);
+		request.setAttribute("pP",pP);
+		
+		
+		return mapping.findForward("goOnePhotoUI");
+	}
+	
+	
+	public ActionForward lastOnePhotoUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String uid=request.getParameter("uid");
+		String aid=request.getParameter("aid");
+		String pid=request.getParameter("pid");
+		String pP=request.getParameter("pP");
+		String type=request.getParameter("type");
+		
+		
+		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(aid)});
+		request.setAttribute("photoList", photoList);
+		
+		Album album=new Album();
+		album=(Album)albumService.findById(Album.class, Integer.valueOf(aid));
+		request.setAttribute("album", album);
+		
+		
+		request.setAttribute("uid",uid);
+		request.setAttribute("aid",aid);
+		
+		for(int i=0;i<photoList.size();i++){
+		    Photo p=(Photo)photoList.get(i);
+		    
+		    if(p.getPId()==Integer.parseInt(pid)){
+		    	
+		    	if(i==0){
+		    		 p=(Photo)photoList.get(photoList.size()-1);
+		    		 request.setAttribute("count",photoList.size());
+		    	}else{
+		             p=(Photo)photoList.get(i-1);
+		             request.setAttribute("count",i);
+		        }	
+		    	
+		    	
+				request.setAttribute("photo",p);			    	
+				request.setAttribute("pid",p.getPId());
+				request.setAttribute("pP",p.getPPhoto());
+				
+				List photoCommentList=photoCommentService.getResult("from PhotoComment where photo.PId=?", new Object[]{Integer.valueOf(p.getPId())});
+				request.setAttribute("photoCommentList", photoCommentList);				
+		    	
+		    }
+		}
+		if(type.equals("friend")){
+		return mapping.findForward("goFriendOnePhotoUI");
+		}else{
+		return mapping.findForward("goOnePhotoUI");
+		}
+	}
+	
+	public ActionForward nextOnePhotoUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String uid=request.getParameter("uid");
+		String aid=request.getParameter("aid");
+		String pid=request.getParameter("pid");
+		String pP=request.getParameter("pP");
+		String type=request.getParameter("type");
+		
+		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(aid)});
+		request.setAttribute("photoList", photoList);
+		
+		Album album=new Album();
+		album=(Album)albumService.findById(Album.class, Integer.valueOf(aid));
+		request.setAttribute("album", album);
+	
+		request.setAttribute("uid",uid);
+		request.setAttribute("aid",aid);
+		
+
+		for(int i=0;i<photoList.size();i++){
+		    Photo p=(Photo)photoList.get(i);
+		    
+		    if(p.getPId()==Integer.parseInt(pid)){
+		    	
+		    	if(i==photoList.size()-1){
+		    		 p=(Photo)photoList.get(0);
+		    		 request.setAttribute("count",1);
+		    	}else{
+		             p=(Photo)photoList.get(i+1);
+		             request.setAttribute("count",i+2);
+		        }	
+		    	
+		    	
+				request.setAttribute("photo",p);			    	
+				request.setAttribute("pid",p.getPId());
+				request.setAttribute("pP",p.getPPhoto());
+				
+				List photoCommentList=photoCommentService.getResult("from PhotoComment where photo.PId=?", new Object[]{Integer.valueOf(p.getPId())});
+				request.setAttribute("photoCommentList", photoCommentList);
+				
+		    	
+		    }
+		}
+		
+
+		
+		
+		if(type.equals("self")){
+			return mapping.findForward("goOnePhotoUI");
+		
+		}else{
+			return mapping.findForward("goFriendOnePhotoUI");
+		}
+	}
+		
+	public ActionForward addPhotoComment(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String type=request.getParameter("type");
+		String uid=request.getParameter("uid");
+		String aid=request.getParameter("aid");
+		String pid=request.getParameter("pid");
+		String pP=request.getParameter("pP");
+		
+		AlbumForm albumForm=(AlbumForm)form;
+		PhotoComment pc=new PhotoComment();
+		
+		pc.setPcContent(albumForm.getPhotoComment());
+		pc.setPcIndate(new Date());
+		
+		User user=(User) request.getSession().getAttribute("user");
+		pc.setUser(user);
+		
+	    Photo p=new Photo();
+		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(aid)});
+		request.setAttribute("photoList", photoList);
+		
+		
+		
+		for(int i=0;i<photoList.size();i++){
+		     p=(Photo)photoList.get(i);		    
+		    if(p.getPId()==Integer.parseInt(pid)){
+		    	    pc.setPhoto(p);	    	    
+		    	    request.setAttribute("count",i+1);
+					request.setAttribute("photo",p);	
+		    }		    		
+		}
+		
+		photoCommentService.save(pc);
+		
+		
+		List photoCommentList=photoCommentService.getResult("from PhotoComment where photo.PId=?", new Object[]{Integer.valueOf(pid)});
+		request.setAttribute("photoCommentList", photoCommentList);
+		
+		request.setAttribute("uid",uid);
+		request.setAttribute("aid",aid);
+		request.setAttribute("pid",pid);
+		request.setAttribute("pP",pP);
+		
+		
+		
+		if(type.equals("friend")){
+			return mapping.findForward("goFriendOnePhotoUI");
+			}else{
+			return mapping.findForward("goOnePhotoUI");
+			}
+	}
+	
+	
+	public ActionForward editAlbumUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		String aid=request.getParameter("aid");
+		Album album=new Album();
+		album=(Album)albumService.findById(Album.class, Integer.valueOf(aid));
+		request.setAttribute("album", album);	
+		
+		return mapping.findForward("goEditAlbumUI");
+	}
+	
+	
+	public ActionForward editAlbum(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String aid=request.getParameter("aid");
+		AlbumForm albumForm=(AlbumForm)form;		
+		Album album=(Album)albumService.findById(Album.class, Integer.valueOf(aid));
+		
+		album.setAlName(albumForm.getName());
+		album.setAlDescription(albumForm.getDescript());
+		album.setAlUpdate(new Date());
+		
+		albumService.update(album);
+		
+        request.setAttribute("album", album);
+		
+		List photoList=albumService.getResult("from Photo where album.id=?", new Object[]{Integer.valueOf(aid)});
+		request.setAttribute("photoList", photoList);
+		
+		
+		return mapping.findForward("goOneAlbumUI");
+	}
+		
+		
 	
 	public void setAlbumService(AlbumServiceInter albumService) {
 		this.albumService = albumService;

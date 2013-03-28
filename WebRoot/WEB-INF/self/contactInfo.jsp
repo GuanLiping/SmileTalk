@@ -42,16 +42,7 @@
 															<a href="/SmileTalk/profile.do?flag=PersonalInfoUI" class="xh"
 																style="color:black">Personal info</a>&nbsp;&nbsp;
 														</td>
-														<td class="tblInfo">
-															&nbsp;&nbsp;
-															<a href="getReady.do?type=edu" class="xh"
-																style="color: black">Education info</a>&nbsp;&nbsp;
-														</td>
-														<td class="tblInfo">
-															&nbsp;&nbsp;
-															<a href="/self/myWorkInfo.jsp" class="xh"
-																style="color: black">Work info</a>&nbsp;&nbsp;
-														</td>
+														
 														<td class="tblInfo">
 															&nbsp;&nbsp;
 															<a href="/SmileTalk/profile.do?flag=UploadPhotoUI" class="xh"

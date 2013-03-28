@@ -25,21 +25,17 @@
 									<td style="border-bottom: 1px #3B5888 solid;" valign="bottom">
 										&nbsp;&nbsp;
 										<span style="background-color: #3B5888">&nbsp; <a
-											href="/xiaonei/addPhoto.jsp?aid=xx" class="xh"
+											href="#" class="xh"
 											style="text-decoration: none; color: white;"> Upload new photo</a>&nbsp;</span>&nbsp;
 										<span onmouseover="this.style.backgroundColor='#D8DFEA';"
 											onmouseout="this.style.backgroundColor='#FFFFFF';">&nbsp;
-											<a href="/xiaonei/editAlbum.jsp?aid=xx" class="xh"
+											<a href="/SmileTalk/album.do?flag=editAlbumUI&aid=${album.alId}" class="xh"
 											style="text-decoration: none;"> Edit album info</a>&nbsp;</span>&nbsp;
-										<span onmouseover="this.style.backgroundColor='#D8DFEA';"
-											onmouseout="this.style.backgroundColor='#FFFFFF';">&nbsp;
-											<a href="javascript:void(0);" class="xh"
-											style="text-decoration: none;"
-											onclick="document.all.divda.style.display=''"> Delete album</a>&nbsp;</span>
+										
 									</td>
 									<td align="right" style="border-bottom: 1px #3B5888 solid;"
 										valign="bottom">
-										<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xxx"
+										<a href="album.do?flag=myAlbumUI"
 											class="xh">Return to Album</a>
 									</td>
 								</tr>
@@ -80,7 +76,7 @@
 												<tr>
 													<td>
 														&nbsp;
-														<input type="hidden" name="id" value="${album.alId }" />
+														<input type="hidden" name="id" value="${album.alId}" />
 													</td>
 													<td>
 														<input type="submit" class="sub" value="upload"

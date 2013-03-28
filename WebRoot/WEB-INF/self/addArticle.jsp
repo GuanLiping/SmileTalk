@@ -27,19 +27,11 @@
 										<span style="background-color: #3B5888">&nbsp; <a
 											href="/xiaonei/addPhoto.jsp?aid=xx" class="xh"
 											style="text-decoration: none; color: white;"> Write new blog</a>&nbsp;</span>&nbsp;
-										<span onmouseover="this.style.backgroundColor='#D8DFEA';"
-											onmouseout="this.style.backgroundColor='#FFFFFF';">&nbsp;
-											<a href="/xiaonei/editAlbum.jsp?aid=xx" class="xh"
-											style="text-decoration: none;"> Edit blog info</a>&nbsp;</span>&nbsp;
-										<span onmouseover="this.style.backgroundColor='#D8DFEA';"
-											onmouseout="this.style.backgroundColor='#FFFFFF';">&nbsp;
-											<a href="javascript:void(0);" class="xh"
-											style="text-decoration: none;"
-											onclick="document.all.divda.style.display=''"> Delete blog</a>&nbsp;</span>
+										
 									</td>
 									<td align="right" style="border-bottom: 1px #3B5888 solid;"
 										valign="bottom">
-										<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xxx"
+										<a href="/SmileTalk/article.do?flag=myArticleUI"
 											class="xh">Return to blog list</a>
 									</td>
 								</tr>

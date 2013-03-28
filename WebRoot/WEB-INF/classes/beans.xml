@@ -46,6 +46,10 @@
 	      <value>com/smiletalk/domain/PhotoComment.hbm.xml</value>
 	      <value>com/smiletalk/domain/Article.hbm.xml</value>
 	      <value>com/smiletalk/domain/ArticleComment.hbm.xml</value>
+	      <value>com/smiletalk/domain/Gossip.hbm.xml</value>
+	      <value>com/smiletalk/domain/Friend.hbm.xml</value>
+	      <value>com/smiletalk/domain/News.hbm.xml</value>
+	      <value>com/smiletalk/domain/NewsComment.hbm.xml</value>
 	    </list>
      </property>
      <property name="hibernateProperties">
@@ -84,6 +88,24 @@
 <bean id="articleServiceImpl" class="com.smiletalk.service.impl.ArticleServiceImpl">
 <property name="sessionFactory" ref="sessionFactory"></property>
 </bean>
+<bean id="gossipServiceImpl" class="com.smiletalk.service.impl.GossipServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="friendServiceImpl" class="com.smiletalk.service.impl.FriendServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="photoCommentServiceImpl" class="com.smiletalk.service.impl.PhotoCommentServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="articleCommentServiceImpl" class="com.smiletalk.service.impl.ArticleCommentServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="newsServiceImpl" class="com.smiletalk.service.impl.NewsServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="newsCommentServiceImpl" class="com.smiletalk.service.impl.NewsCommentServiceImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
 
 <!-- action setting -->
 <bean name="/test" class="com.smiletalk.web.action.TestAction"/>
@@ -100,18 +122,52 @@
 <property name="cityService" ref="cityServiceImpl"/>
 <property name="userUniversityService" ref="userUniversityServiceImpl"/>
 <property name="articleService" ref="articleServiceImpl"/>
+<property name="gossipService" ref="gossipServiceImpl"/>
+<property name="friendService" ref="friendServiceImpl"/>
 </bean>
 
 <bean name="/login" class="com.smiletalk.web.action.LoginAction">
 <property name="userService" ref="userServiceImpl"/>
+<property name="newsService" ref="newsServiceImpl"/>
+<property name="friendService" ref="friendServiceImpl"/>
+</bean>
+
+<bean name="/news" class="com.smiletalk.web.action.NewsAction">
+<property name="userService" ref="userServiceImpl"/>
+<property name="newsService" ref="newsServiceImpl"/>
+<property name="friendService" ref="friendServiceImpl"/>
 </bean>
 
 <bean name="/album" class="com.smiletalk.web.action.AlbumAction">
+<property name="userService" ref="userServiceImpl"/>
 <property name="albumService" ref="albumServiceImpl"/>
+<property name="photoCommentService" ref="photoCommentServiceImpl"/>
 </bean>
 
 <bean name="/article" class="com.smiletalk.web.action.ArticleAction">
 <property name="articleService" ref="articleServiceImpl"/>
+<property name="articleCommentService" ref="articleCommentServiceImpl"/>
+<property name="userService" ref="userServiceImpl"/>
+</bean>
+
+<bean name="/gossip" class="com.smiletalk.web.action.GossipAction">
+<property name="userService" ref="userServiceImpl"/>
+<property name="friendService" ref="friendServiceImpl"/>
+<property name="albumService" ref="albumServiceImpl"/>
+<property name="cityService" ref="cityServiceImpl"/>
+<property name="userUniversityService" ref="userUniversityServiceImpl"/>
+<property name="articleService" ref="articleServiceImpl"/>
+<property name="gossipService" ref="gossipServiceImpl"/>
+</bean>
+
+<bean name="/friend" class="com.smiletalk.web.action.FriendAction">
+<property name="userService" ref="userServiceImpl"/>
+<property name="friendService" ref="friendServiceImpl"/>
+<property name="albumService" ref="albumServiceImpl"/>
+<property name="cityService" ref="cityServiceImpl"/>
+<property name="userUniversityService" ref="userUniversityServiceImpl"/>
+<property name="articleService" ref="articleServiceImpl"/>
+<property name="gossipService" ref="gossipServiceImpl"/>
 </bean>
 
 <!-- tx Manager -->

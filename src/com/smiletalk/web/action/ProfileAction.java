@@ -23,6 +23,8 @@ import com.smiletalk.domain.UserUniversity;
 import com.smiletalk.service.inter.AlbumServiceInter;
 import com.smiletalk.service.inter.ArticleServiceInter;
 import com.smiletalk.service.inter.CityServiceInter;
+import com.smiletalk.service.inter.FriendServiceInter;
+import com.smiletalk.service.inter.GossipServiceInter;
 import com.smiletalk.service.inter.UniversityServiceInter;
 import com.smiletalk.service.inter.UserServiceInter;
 import com.smiletalk.service.inter.UserUniversityServiceInter;
@@ -34,12 +36,22 @@ public class ProfileAction extends DispatchAction {
 	private UserServiceInter userService;
 	private AlbumServiceInter albumService;
 	private ArticleServiceInter articleService;
+	private GossipServiceInter gossipService;
+	private CityServiceInter cityService;
+	private UserUniversityServiceInter userUniversityService;
+	private FriendServiceInter friendService;
+	
+	public void setFriendService(FriendServiceInter friendService) {
+		this.friendService = friendService;
+	}
+
+	public void setGossipService(GossipServiceInter gossipService) {
+		this.gossipService = gossipService;
+	}
+
 	public void setArticleService(ArticleServiceInter articleService) {
 		this.articleService = articleService;
 	}
-
-	private CityServiceInter cityService;
-	private UserUniversityServiceInter userUniversityService;
 	
 	public void setUserUniversityService(
 			UserUniversityServiceInter userUniversityService) {
@@ -61,15 +73,14 @@ public class ProfileAction extends DispatchAction {
 	//jump to self main page
 	public ActionForward goHomePageUI(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
+	
+		User user=(User) request.getSession().getAttribute("user");	
 		
-		
-		
-		User user=(User) request.getSession().getAttribute("user");
-		
-		City city=(City)cityService.findById(City.class, Integer.valueOf(user.getCity().getCiId()));
-		if(user.getCity().getCiId()==21){
+        if(user.getCity().getCiId()==21){
 			request.setAttribute("city", user.getOtherCityName());
-		}else{
+		}else{			
+			
+			City city=(City)cityService.findById(City.class, Integer.valueOf(user.getCity().getCiId()));					
 			request.setAttribute("city", city.getCiName());
 		}
 		
@@ -83,6 +94,14 @@ public class ProfileAction extends DispatchAction {
 		
 		List articleList=articleService.getResult("from Article where user.userId=?", new Object[]{Integer.valueOf(user.getUserId())});
 		request.setAttribute("articleList", articleList);
+		
+		List gossipList=gossipService.getResult("from Gossip where getId=?", new Object[]{Integer.valueOf(user.getUserId())});
+		request.setAttribute("gossipList", gossipList);
+		
+		List friendList=friendService.getResult("from Friend where hostId=?", new Object[]{Integer.valueOf(user.getUserId())});
+		request.setAttribute("friendList", friendList);
+		
+		
 		
 		return mapping.findForward("goHomePageUI");
 	}
@@ -134,7 +153,9 @@ public class ProfileAction extends DispatchAction {
 		UserForm userForm=(UserForm) form;
 		User user=(User) request.getSession().getAttribute("user");
 		
-		user.setBook(userForm.getBook());
+		user.setMsn(userForm.getMsn());
+		user.setMobile(userForm.getMobile());
+		user.setWebsite(userForm.getWebsite());
 	    
 		userService.update(user);
 		return mapping.findForward("goContactInfoUI");

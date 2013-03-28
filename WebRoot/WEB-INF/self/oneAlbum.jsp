@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,8 +23,12 @@
 											<table width="100%" border="0" >
 												<tr>
 													<td rowspan="2" width="10%">
-														<a href="profile.do?type=feed&oid=xx"><img
-																src="/SmileTalk/images/userhead/u1.gif" width="50px" height="50px" /> </a>
+														<c:if test="${user.photo=='default.gif'}">
+														 <img src="/SmileTalk/images/userhead/0000.gif" width="50px" height="50px"/>
+														</c:if>
+														<c:if test="${user.photo!='default.gif'}">		
+								                       <img src="/SmileTalk/images/${user.userId }/head/${user.photo}?abc=<%=Math.random() %>" width="50px" height="50px"/>
+						                               </c:if>
 													</td>
 													<td>
 														<font class="word2"> my album</font><!-- who look -->
@@ -40,31 +46,31 @@
 									</tr>
 									<tr>
 										<td>
-											<font class="word4">1 -1  / total 2 |</font>
-											<a href="/xiaonei/editAlbum.jsp?aid=xxx" class="xh">edit album</a>
+											<font class="word4"> total ${fn:length(photoList)} |</font>
+											<a href="/SmileTalk/album.do?flag=editAlbumUI&aid=${album.alId}" class="xh">edit album</a>
 											|
-											<a href="/xiaonei/addPhoto.jsp?aid=xxx" class="xh">upload picture</a>
+											<a href="/SmileTalk/album.do?flag=addMorePhotoUI&aid=${album.alId}" class="xh">upload picture</a>
 
 										</td>
 										<td align="right">
 											<table border="0">
 												<tr>
 													<td>
-														<font class="word2" style="font-size: 12px">x page</font>
+														<font class="word2" style="font-size: 12px"></font>
 													</td>
 													<td>
-														<font class="word2" style="font-size: 12px">x page</font>
+														<font class="word2" style="font-size: 12px"></font>
 													</td>
 													<td>
 														<a href="album.do?type=oneAlbum&pageNo=1&oid=xx&aid=xx"
-															class="xh"> << 1 </a>
+															class="xh"> </a>
 													</td>
 													<td>
-														...
+														
 													</td>
 													<td>
 														<a href="album.do?type=oneAlbum&pageNo=xx&oid=xx&aid=xx"
-															class="xh"> < Last</a>
+															class="xh"> </a>
 													</td>
 												</tr>
 											</table>
@@ -78,20 +84,19 @@
 													<c:forEach var="photo" items="${photoList}" varStatus="vs">
 													<td width="20%" align="center">
 														<a
-															href="/SmileTalk/album.do?flag=onePhotoUI&uid=${user.userId }&pid=${photo.album.alId }&pP=${photo.PPhoto}&pageNo=1"
+															href="/SmileTalk/album.do?flag=onePhotoUI&uid=${user.userId }&aid=${photo.album.alId }&pP=${photo.PPhoto}&pid=${photo.PId}&pageNo=1"
 															style="border: 1px #D8DFEA solid;"
 															onmouseover="chgImg(this)" onmouseout="chgImg2(this)"
 															id="a x"> <img src="/SmileTalk/images/${user.userId }/album/${photo.album.alId }/${photo.PPhoto}"
 																width="100px" height="75px" alt="xxxx"
 																style="border: 5px #FFFFFF solid;" id="aa+xxxx" /> </a>
 													</td>
-													<c:if test="${vs.count%6==0}"></tr><tr></c:if>
+													<c:if test="${vs.count%5==0}"></tr><tr></c:if>
 													</c:forEach>
 												</tr>
 
 											</table>
-											<!-- 如果没有照片显示这句话 
-											<font class="word3"> 没有照片</font>-->
+											
 										</td>
 									</tr>
 									<tr>
@@ -107,21 +112,21 @@
 											<table border="0">
 												<tr>
 													<td>
-														<font class="word2" style="font-size: 12px">x</font>
+														<font class="word2" style="font-size: 12px"></font>
 													</td>
 													<td>
-														<font class="word2" style="font-size: 12px">Total x</font>
+														<font class="word2" style="font-size: 12px">Total ${fn:length(photoList)}</font>
 													</td>
 													<td>
 														<a href="album.do?type=oneAlbum&pageNo=1&oid=xx&aid=xx"
-															class="xh"> << 1 </a>
+															class="xh"> </a>
 													</td>
 													<td>
-														...
+														
 													</td>
 													<td>
 														<a href="album.do?type=oneAlbum&pageNo=xx&oid=xx&aid=xx"
-															class="xh"> < Last</a>
+															class="xh"> </a>
 													</td>
 											</table>
 										</td>

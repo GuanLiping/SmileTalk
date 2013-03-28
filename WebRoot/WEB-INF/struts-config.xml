@@ -6,6 +6,9 @@
     <form-bean name="userForm" type="com.smiletalk.web.form.UserForm" />
     <form-bean name="albumForm" type="com.smiletalk.web.form.AlbumForm" />
     <form-bean name="articleForm" type="com.smiletalk.web.form.ArticleForm" />
+    <form-bean name="gossipForm" type="com.smiletalk.web.form.GossipForm" />
+    <form-bean name="friendForm" type="com.smiletalk.web.form.FriendForm" />
+    <form-bean name="newsForm" type="com.smiletalk.web.form.NewsForm" />
 
   </form-beans>
 
@@ -66,6 +69,7 @@
       
       <forward name="goToMain" path="/WEB-INF/self/home.jsp" />
       <forward name="goHomeUI" path="/WEB-INF/self/home.jsp" />
+      <forward name="goToIndex" path="/WEB-INF/public/index.jsp" />
       
     </action>
     <action
@@ -83,21 +87,76 @@
       <forward name="goOneAlbumUI" path="/WEB-INF/self/oneAlbum.jsp" />
       <forward name="goAddAlbumUI" path="/WEB-INF/self/addOrChoiceAlblum.jsp" />
       <forward name="goAddPhotoUI" path="/WEB-INF/self/addPhoto.jsp" />
+      <forward name="goFriendAlbumUI" path="/WEB-INF/friend/friendAlbum.jsp" />
+      <forward name="goFriendOneAlbumUI" path="/WEB-INF/friend/friendOneAlbum.jsp" />
+      <forward name="goFriendOnePhotoUI" path="/WEB-INF/friend/friendOnePhoto.jsp" />
+      <forward name="goEditAlbumUI" path="/WEB-INF/self/editAlbum.jsp" />
     </action>
     <action
       attribute="articleForm"
-      input="/WEB-INF/self/myArticle.jsp"
+      input="/WEB-INF/friend/friendArticle.jsp"
       name="articleForm"
       parameter="flag"
       path="/article"
       scope="request"
       type="com.smiletalk.web.action.ArticleAction"
       validate="false"
-      cancellable="true" >
-      <forward name="goMyArticleUI" path="/WEB-INF/self/myArticle.jsp" />
+      cancellable="true">
       <forward name="goAddArticleUI" path="/WEB-INF/self/addArticle.jsp" />
+      <forward name="goFriendArticleUI" path="/WEB-INF/friend/friendArticle.jsp" />
+      <forward name="goMyArticleUI" path="/WEB-INF/self/myArticle.jsp" />
       <forward name="goOneArticleUI" path="/WEB-INF/self/oneArticle.jsp" />
+      <forward name="goFriendOneArticleUI" path="/WEB-INF/friend/friendOneArticle.jsp" />
+      <forward name="goEditOneArticleUI" path="/WEB-INF/self/editArticle.jsp" />
     </action>
+    <action
+      attribute="gossipForm"
+      input="/WEB-INF/friend/friendHomePage.jsp"
+      name="gossipForm"
+      parameter="flag"
+      path="/gossip"
+      scope="request"
+      type="com.smiletalk.web.action.GossipAction"
+      validate="false"
+      cancellable="true">
+      <forward name="goFriendHome" path="/WEB-INF/friend/friendHomePage.jsp" />
+      <forward name="goHomePage" path="/WEB-INF/self/homePage.jsp" />
+      <forward name="goAllGossipUI" path="/WEB-INF/self/viewAllGossip.jsp" />
+      <forward name="goFreindAllGossipUI" path="/WEB-INF/friend/viewFriendAllGossip.jsp" />
+      
+    </action>
+
+    <action
+      attribute="friendForm"
+      input="/WEB-INF/friend/friendHomePage.jsp"
+      name="friendForm"
+      parameter="flag"
+      path="/friend"
+      scope="request"
+      type="com.smiletalk.web.action.FriendAction"
+      validate="false"
+      cancellable="true">
+      <forward name="goFriendHome" path="/WEB-INF/friend/friendHomePage.jsp" />
+      
+      <forward name="goShowSearchFriend" path="/WEB-INF/self/searchFriend.jsp" />
+      <forward name="goViewAllFriendUI" path="/WEB-INF/self/viewAllFriend.jsp" />
+      <forward name="goViewfAllFriendUI" path="/WEB-INF/friend/viewfAllFriend.jsp" />
+      <forward name="goSetBestFriendUI" path="/WEB-INF/self/setBestFriend.jsp" />
+    </action>
+    <action
+      attribute="newsForm"
+      input="/WEB-INF/self/home.jsp"
+      name="newsForm"
+      parameter="flag"
+      path="/news"
+      scope="request"
+      type="com.smiletalk.web.action.NewsAction"
+      validate="false"
+      cancellable="true" >
+      <forward name="goHomeUI" path="/WEB-INF/self/home.jsp" />
+    </action>
+
+
 
 
 

@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -16,6 +17,7 @@
 		function hiddenDoing(){
 		 document.getElementById("doing").style.display="none";
 		}
+		
 		
 		//-->
 		</script>
@@ -37,10 +39,10 @@
 								<img src="/SmileTalk/images/front/blog.gif" />
 							</td>
 							<td>
-								<a class="yy" href="#">Blog</a>
+								<a class="yy" href="/SmileTalk/article.do?flag=myArticleUI">Blog</a>
 							</td>
 							<td>
-								<a href="#" class="xh" style="color: #808080">publish</a>
+								<a href="/SmileTalk/article.do?flag=addArticleUI" class="/SmileTalk/article.do?flag=myArticleUI" style="color: #808080">publish</a>
 							</td>
 						</tr>
 						<tr>
@@ -48,7 +50,7 @@
 								<img src="/SmileTalk/images/front/photo.gif" />
 							</td>
 							<td>
-								<a href="" class="yy">Photo</a>
+								<a href="/SmileTalk/album.do?flag=myAlbumUI" class="yy">Photo</a>
 							</td>
 							<td>
 								<a href="/SmileTalk/album.do?flag=myAlbumUI" class="xh" style="color: #808080">upload</a>
@@ -70,7 +72,7 @@
 								<img src="/SmileTalk/images/front/share.gif" />
 							</td>
 							<td>
-								<a href="" class="yy">Share</a>
+								<a href="#" class="yy">Share</a>
 							</td>
 							<td>
 
@@ -134,11 +136,11 @@
 							</td>
 							<td width="83">
 								<img src="/SmileTalk/images/front/blog.gif" />
-								<a class="xh" href="writeBlog.jsp">Blog</a>
+								<a class="xh" href="/SmileTalk/article.do?flag=myArticleUI">Blog</a>
 							</td>
 							<td width="83">
 								<img src="/SmileTalk/images/front/photo.gif" />
-								<a class="xh" href="addAlbum.jsp">Photo</a>
+								<a class="xh" href="/SmileTalk/album.do?flag=myAlbumUI">Photo</a>
 							</td>
 							<td width="83">
 								<img src="/SmileTalk/images/front/share.gif" />
@@ -147,17 +149,19 @@
 						</tr>
 						<tr id="doing" style="display: none;">
 							<td colspan="5">
-								<input type="text" value="doing some thing.." id="udo" size="30" />
+							<form action="/SmileTalk/news.do?flag=AddNews" method="post">  
+								<input type="text" value="doing some thing.." id="udo" size="30" name="content"/>
 								<input type="submit" value="submit" style="width: 60px" class="sub"
 									onclick="fdoing()" />
 								<input type="button" value="cancle" onclick="hiddenDoing()"
 									class="button2" />
+							</form>		
 							</td>
 						</tr>
 					</table>
 				</div>
 				<!-- comment and answer -->
-				<div class="mes_response">
+				<!--  <div class="mes_response">
 					<table>
 						<tr>
 							<td class="word2">
@@ -180,426 +184,128 @@
 									style="color: #B1BDD6; font-weight: bold; text-decoration: none">×</a>
 							</td>
 						</tr>
-						<tr>
-							<td>
-								<img src="/SmileTalk/images/front/wall_post.gif" />
-								<span class="word4">Momo answer you</span>
-							</td>
-							<td>
-								<a href="javascript:void(0);" class="xh" onclick="readgt(this)"
-									id="留言id号代填"
-									onmouseover="this.style.color='#FFFFFF';this.style.backgroundColor='#3B5888'"
-									onmouseout="this.style.color='#B1BDD6';this.style.backgroundColor='#FFFFFF'"
-									style="color: #B1BDD6; font-weight: bold; text-decoration: none">×</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<img src="/SmileTalk/images/front/wall_post.gif" />
-								<span class="word4">Momo answer you</span>
-							</td>
-							<td>
-								<a href="javascript:void(0);" class="xh" onclick="readgt(this)"
-									id="留言id号代填"
-									onmouseover="this.style.color='#FFFFFF';this.style.backgroundColor='#3B5888'"
-									onmouseout="this.style.color='#B1BDD6';this.style.backgroundColor='#FFFFFF'"
-									style="color: #B1BDD6; font-weight: bold; text-decoration: none">×</a>
-							</td>
-						</tr>
-
+						
 					</table>
-				</div>
+				</div>-->
 				<!-- comment and answer end -->
 				<!-- status start -->
 				<div class="new_thing">
-					<table>
-						<tr>
-							<td class="word2">
-								New states()
+					
+					<c:forEach var="news" items="${newsList}" varStatus="vs">
+					<c:if test="${vs.count<=6}">
+					  <form action="/SmileTalk/news.do?flag=AddNewsComment" method="post">
+					  <table>
+					  <tr>
+					   	<td class="word2">
+								<a href="friend.do?flag=viewFriend&fid=${news.user.userId}"> <img
+										src="/SmileTalk/images/${news.user.userId}/head/${news.user.photo}" width="55px" height="55px" /> </a>
+							
 							</td>
-						</tr>
-						<tr>
 							<td>
-								New states()
+                                <span class="word3">${news.user.name}</span><br/>	
+							    <input type="hidden" name="id" value="${news.user.userId}"/> 
+							    <span class="word2">${news.content}</span>	
 							</td>
-						</tr>
-					</table>
+							</tr>
+							<!-- 
+							<tr>
+							<td></td>
+							<td>
+							    <textarea style="width: 500px; font-size: 12px" id="cont" name="comment"></textarea>
+							</td>
+							</tr>
+							<tr>
+							<td></td>
+							<td>
+							    <input class="sub" value="Comment" type="submit" style="width: 80px" />
+							</td>
+							</tr>
+							 -->
+							<hr/>
+													
+						</table>
+						</form>
+						</c:if>
+						</c:forEach>
+						
+					
 				</div>
-				<!-- status end -->
-				<!-- popular star start-->
-				<div class="popular">
-					<table>
-						<tr>
-							<td class="STYLE3" align="left" colspan="9">
-								Vaasa popular star
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-
-							</td>
-							<td>
-
-							</td>
-							<td>
-
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!-- popular star end -->
-
-				<!-- freash man start-->
-				<div class="freshman">
-					<table>
-						<tr>
-							<td class="STYLE3" align="left" colspan="9">
-								VAMK freash man
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a><img src="/SmileTalk/images/userhead/u1.gif" width="55px"
-										height="55px" /> </a>
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-
-							</td>
-							<td>
-
-							</td>
-							<td>
-
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!-- freash man end-->
+				
 			</div>
 
-			<div class="linkman">
-				<!-- recent visit，max 6, start-->
-				<div class="linkman_last">
-					<table>
-						<tr>
-							<td style="line-height: 25px" colspan="2">
-								<span class="STYLE3">Recently visit</span>
-								<font class="word3">(12)</font>
-							</td>
-							<td style="line-height: 25px;" align="right">
-								<a href="/self/myfoot.jsp" class="xh">More>></a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- person online，then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-								<span class="word3">11.11<!-- join time -->
-								</span>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-								<span class="word3">11.11<!-- join time -->
-								</span>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-								<span class="word3">11.11<!-- join time -->
-								</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-								<span class="word3">11.11<!-- join time -->
-								</span>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-								<span class="word3">11.11<!-- join time -->
-								</span>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-								<span class="word3">11.11<!-- join time -->
-								</span>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!-- recent visit  end-->
-
-				<!-- person you may know，max 6,  start-->
-				<div class="may_know">
-					<table>
-						<tr>
-							<td style="line-height: 25px" colspan="2">
-								<span class="STYLE3">People you may know</span>
-								<font class="word3">(7)</font>
-							</td>
-							<td style="line-height: 25px;" align="right">
-								<a href="/self/myfoot.jsp" class="xh">More>></a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!-- person you may know  end-->
-				<!-- friends birthday,max 6,start-->
+				<!-- friends ,max 6,start-->
 				<div class="birth_linkman">
 					<table>
 						<tr>
-							<td style="line-height: 25px" colspan="2">
-								<span class="STYLE3">Friend's birthday</span>
-								<font class="word3">(7)</font>
+							<td style="line-height: 25px" colspan="3">
+								<span class="STYLE3">My Friends</span>
+								<font class="word3">(${fn:length(friendList)})</font>
 							</td>
 							<td style="line-height: 25px;" align="right">
-								<a href="/self/myfoot.jsp" class="xh">More>></a>
+								<a href="/SmileTalk/friend.do?flag=goAllFriend" class="xh">More>></a>
 							</td>
 						</tr>
 						<tr>
+						<c:forEach var="friend" items="${friendList}" varStatus="vs">
+						 <c:if test="${vs.count<=6}">
 							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
+								<a href="friend.do?flag=viewFriend&fid=${friend.user.userId}"> 
+								<c:if test="${friend.user.photo=='default.gif'}">
+							    <img src="/SmileTalk/images/userhead/0000.gif" width="55px" height="55px"/>
+							    </c:if>
+		         				<c:if test="${friend.user.photo!='default.gif'}">
+								<img src="/SmileTalk/images/${friend.user.userId }/head/${friend.user.photo }?abc=<%=Math.random() %>" width="55px" height="55px"/>
+							    </c:if>
+							    </a>
 								<!-- online then show -->
 								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- this person's birthday -->
+								<span class="word3">${friend.user.name}<!-- this person's birthday -->
 								</span>
 							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- this person's birthday -->
-								</span>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- this person's birthday -->
-								</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- this person's birthday -->
-								</span>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- this person's birthday -->
-								</span>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<span class="word3">11.11<!-- this person's birthday -->
-								</span>
-							</td>
+						</c:if>
+						</c:forEach>	
 						</tr>
 					</table>
 				</div>
 				<!-- friends birthday  end-->
 
-				<!-- online frineds, max 6,start-->
-				<div class="linkman_online">
+				<!-- person you may know，max 6,  start-->
+				<div class="may_know">
 					<table>
 						<tr>
-							<td style="line-height: 25px" colspan="2">
-								<span class="STYLE3">Friends online</span>
-								<font class="word3">(12)</font>
+							<td style="line-height: 25px" colspan="3">
+								<span class="STYLE3">People you may know</span>
+								<font class="word3">(${fn:length(peopleList)})</font>
 							</td>
 							<td style="line-height: 25px;" align="right">
-								<a href="/self/myfoot.jsp" class="xh">More>></a>
+								<a href="/SmileTalk/friend.do?flag=goAllFriend" class="xh">More>></a>
 							</td>
 						</tr>
 						<tr>
+							<c:forEach var="people" items="${peopleList}" varStatus="vs">
+						 <c:if test="${vs.count<=6}">
 							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
+								<a href="friend.do?flag=viewFriend&fid=${people.userId}"> 
+								 <c:if test="${people.photo=='default.gif'}">
+							    <img src="/SmileTalk/images/userhead/0000.gif" width="55px" height="55px"/>
+							    </c:if>
+		         				<c:if test="${people.photo!='default.gif'}">				
+								<img src="/SmileTalk/images/${people.userId}/head/${people.photo}" width="55px" height="55px" /> 
+								</c:if>
+								</a>
 								<!-- online then show -->
 								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
+								<span class="word3">${people.name}<!-- this person's birthday -->
+								</span>
 							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
-							<td>
-								<a href="profile.do?type=feed&oid=xx"> <img
-										src="/SmileTalk/images/userhead/u14.gif" width="55px" height="55px" /> </a>
-								<!-- online then show -->
-								<img src="/SmileTalk/images/front/online.gif" />
-								<a href="profile.do?type=feed&oid=xx" class="xh">Liping</a>
-							</td>
+						</c:if>
+						</c:forEach>						
 						</tr>
 					</table>
 				</div>
-				<!-- online frineds  end-->
+				<!-- person you may know  end-->
 			</div>
-		</div>
+		
 		<!-- add foot.jsp -->
 		<jsp:include page="../public/foot.jsp"></jsp:include>
 	</body>

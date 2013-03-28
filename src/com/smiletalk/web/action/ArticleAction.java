@@ -15,8 +15,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import com.smiletalk.domain.Article;
+import com.smiletalk.domain.ArticleComment;
+import com.smiletalk.domain.City;
+import com.smiletalk.domain.PhotoComment;
 import com.smiletalk.domain.User;
+import com.smiletalk.service.inter.ArticleCommentServiceInter;
 import com.smiletalk.service.inter.ArticleServiceInter;
+import com.smiletalk.service.inter.UserServiceInter;
 import com.smiletalk.web.form.ArticleForm;
 
 /** 
@@ -29,9 +34,56 @@ import com.smiletalk.web.form.ArticleForm;
 public class ArticleAction extends DispatchAction {
 
 	private ArticleServiceInter articleService;
+	private UserServiceInter userService;
+	public void setUserService(UserServiceInter userService) {
+		this.userService = userService;
+	}
+
+
+	private ArticleCommentServiceInter articleCommentService;
 	
+	public void setArticleCommentService(
+			ArticleCommentServiceInter articleCommentService) {
+		this.articleCommentService = articleCommentService;
+	}
+
 	public void setArticleService(ArticleServiceInter articleService) {
 		this.articleService = articleService;
+	}
+	
+	
+	public ActionForward viewFriendOneBlog(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		String bid=request.getParameter("bid");
+		String fid=request.getParameter("fid");
+		
+		
+		List articleCommentList=articleCommentService.getResult("from ArticleComment where article.articleId=?", new Object[]{Integer.valueOf(bid)});	
+		request.setAttribute("articleCommentList", articleCommentList);
+		
+		Article article=(Article)articleService.findById(Article.class, Integer.parseInt(bid));					
+		request.setAttribute("article", article);
+		request.setAttribute("fid", fid);
+		
+		return mapping.findForward("goFriendOneArticleUI");
+	}
+		
+	
+	
+	public ActionForward friendArticleUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		String fid=request.getParameter("fid");
+		
+		User friend1=(User) userService.findById(User.class, Integer.parseInt(fid));
+		request.setAttribute("friend1", friend1);
+		
+		List articleList=articleService.getResult("from Article where user.userId=?", new Object[]{Integer.valueOf(fid)});
+		request.setAttribute("articleList", articleList);
+		
+		
+		return mapping.findForward("goFriendArticleUI");
 	}
 	
 	public ActionForward myArticleUI(ActionMapping mapping, ActionForm form,
@@ -51,6 +103,98 @@ public class ArticleAction extends DispatchAction {
 		
 		
 		return mapping.findForward("goAddArticleUI");
+	}
+	
+	
+	public ActionForward editoneBlog(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String bid=request.getParameter("bid");
+		
+		Article article=(Article)articleService.findById(Article.class, Integer.parseInt(bid));					
+		request.setAttribute("article", article);
+		
+		List articleCommentList=articleCommentService.getResult("from ArticleComment where article.articleId=?", new Object[]{Integer.valueOf(bid)});	
+		request.setAttribute("articleCommentList", articleCommentList);
+		
+		return mapping.findForward("goEditOneArticleUI");
+		
+	}
+	
+	public ActionForward viewoneBlog(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		String bid=request.getParameter("bid");
+				
+		Article article=(Article)articleService.findById(Article.class, Integer.parseInt(bid));					
+		request.setAttribute("article", article);
+		
+		List articleCommentList=articleCommentService.getResult("from ArticleComment where article.articleId=?", new Object[]{Integer.valueOf(bid)});	
+		request.setAttribute("articleCommentList", articleCommentList);
+		
+		return mapping.findForward("goOneArticleUI");
+	}
+	
+	
+	public ActionForward deleteArticleComment(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String id=request.getParameter("id");
+		String bid=request.getParameter("bid");
+		
+		ArticleComment ac=(ArticleComment)articleCommentService.findById(ArticleComment.class, Integer.valueOf(id));
+		articleCommentService.delete(ac);
+		
+		
+		Article article=(Article)articleService.findById(Article.class, Integer.parseInt(bid));					
+		request.setAttribute("article", article);
+		
+		List articleCommentList=articleCommentService.getResult("from ArticleComment where article.articleId=?", new Object[]{Integer.valueOf(bid)});	
+		request.setAttribute("articleCommentList", articleCommentList);
+		
+		return mapping.findForward("goOneArticleUI");
+	}
+	
+	public ActionForward addArticleComment(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		String type=request.getParameter("type");
+        String bid=request.getParameter("bid");
+		Article article=(Article)articleService.findById(Article.class, Integer.parseInt(bid));					
+		request.setAttribute("article", article);
+		
+		User user=(User) request.getSession().getAttribute("user");
+		
+		ArticleForm articleForm=(ArticleForm) form;
+		ArticleComment ac=new ArticleComment();
+		ac.setContent(articleForm.getArticleComment());
+		ac.setArticle(article);
+		ac.setIndate(new Date());
+		ac.setUser(user);
+		
+		articleCommentService.save(ac);
+		
+		List articleCommentList=articleCommentService.getResult("from ArticleComment where article.articleId=?", new Object[]{Integer.valueOf(bid)});	
+		request.setAttribute("articleCommentList", articleCommentList);
+		
+		if(type.equals("self")){
+		return mapping.findForward("goOneArticleUI");	
+		}else{
+		return mapping.findForward("goFriendOneArticleUI");
+		}
+	}
+	
+	
+	
+	public ActionForward editoneArticleUI(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		ArticleForm articleForm=(ArticleForm) form;
+		Article article=(Article)articleService.findById(Article.class, articleForm.getArticleId());	
+		article.setTitle(articleForm.getTitle());
+		article.setContent(articleForm.getContent());
+		
+		articleService.update(article);
+		request.setAttribute("article", article);
+		return mapping.findForward("goOneArticleUI");
 	}
 	
 	public ActionForward oneArticleUI(ActionMapping mapping, ActionForm form,

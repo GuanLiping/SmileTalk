@@ -58,14 +58,14 @@
 									</td>
 									<td>
 										<a href="album.do?type=album&pageNo=1&oid=xx" class="xh">
-											<< 1 </a>
+											 </a>
 									</td>
 									<td>
-										...
+										
 									</td>
 									<td>
 										<a href="album.do?type=album&pageNo=xx&oid=xx" class="xh">
-											< Last</a>
+											</a>
 									</td>
 								</tr>
 							</table>
@@ -91,6 +91,7 @@
 											   <c:if test="${status.count==1}">
 											   <c:set var="cover">${eachphoto.PPhoto}</c:set>
 											   </c:if>
+											   <c:set var="photoCount">${status.count}</c:set>
 											   </c:forEach>
 									   
 											   </div>
@@ -105,14 +106,14 @@
 														cellpadding="1">
 														<tr>
 															<td>
-																<a href="album.do?flag=viewoneAlbum&oid=xx&pageNo=1&aid=xx"
+																<a href="album.do?flag=viewoneAlbum&oid=xx&pageNo=1&aid=${album.alId}"
 																	class="xh" style="font-weight: bold; font-size: 16px">${album.alName}          
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<font class="word3">2 </font>
+																<font class="word3">${photoCount}</font>
 															</td>
 														</tr>							
                                                         <div style="display:none;">
@@ -131,9 +132,9 @@
 														</tr>
 														<tr>
 															<td>
-																<a href="/xiaonei/editAlbum.jsp?aid=xxx" class="xh">Edit Album</a>
+																<a href="/SmileTalk/album.do?flag=editAlbumUI&aid=${album.alId}" class="xh">Edit Album</a>
 																|
-																<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
+																<a href="album.do?flag=viewoneAlbum&type=oneAlbum&oid=xx&pageNo=1&aid=${album.alId}"
 																	class="xh">View Album</a>
 															</td>
 														</tr>
@@ -144,160 +145,9 @@
 								 </c:forEach>			
 											
 											
-												
-											 
-											<!--<tr>
-												<td valign="top" width="33%">
-													<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx">
-														<img src="/SmileTalk/images/photos/c1.jpg" width="200px"
-															height="150px" border="0" /> </a>
-												</td>
-												<td valign="top">
-													<table width="100%" border="0" cellspacing="1"
-														cellpadding="1">
-														<tr>
-															<td>
-																<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-																	class="xh" style="font-weight: bold; font-size: 16px">相册名称
-																</a>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<font class="word3">2张照片</font>
-															</td>
-														</tr>
-
-														<tr>
-															<td>
-																<font class="word3">如果有对相册的评论，这里显示一下 </font>
-															</td>
-														</tr>
-
-														<tr>
-															<td>
-																<font class="word3">更新于2001年11月11日 </font>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<font class="word3">创建于2001年11月11日 </font>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<a href="/xiaonei/editAlbum.jsp?aid=xxx" class="xh">编辑相册</a>
-																|
-																<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-																	class="xh">查看相册</a>
-															</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" width="33%">
-													<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx">
-														<img src="/SmileTalk/images/photos/c1.jpg" width="200px"
-															height="150px" border="0" /> </a>
-												</td>
-												<td valign="top">
-													<table width="100%" border="0" cellspacing="1"
-														cellpadding="1">
-														<tr>
-															<td>
-																<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-																	class="xh" style="font-weight: bold; font-size: 16px">相册名称
-																</a>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<font class="word3">2张照片</font>
-															</td>
-														</tr>
-
-														<tr>
-															<td>
-																<font class="word3">如果有对相册的评论，这里显示一下 </font>
-															</td>
-														</tr>
-
-														<tr>
-															<td>
-																<font class="word3">更新于2001年11月11日 </font>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<font class="word3">创建于2001年11月11日 </font>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<a href="/xiaonei/editAlbum.jsp?aid=xxx" class="xh">编辑相册</a>
-																|
-																<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-																	class="xh">查看相册</a>
-															</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" width="33%">
-													<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx">
-														<img src="/SmileTalk/images/photos/c1.jpg" width="200px"
-															height="150px" border="0" /> </a>
-												</td>
-												<td valign="top">
-													<table width="100%" border="0" cellspacing="1"
-														cellpadding="1">
-														<tr>
-															<td>
-																<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-																	class="xh" style="font-weight: bold; font-size: 16px">相册名称
-																</a>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<font class="word3">2张照片</font>
-															</td>
-														</tr>
-
-														<tr>
-															<td>
-																<font class="word3">如果有对相册的评论，这里显示一下 </font>
-															</td>
-														</tr>
-
-														<tr>
-															<td>
-																<font class="word3">更新于2001年11月11日 </font>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<font class="word3">创建于2001年11月11日 </font>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<a href="/xiaonei/editAlbum.jsp?aid=xxx" class="xh">编辑相册</a>
-																|
-																<a href="album.do?type=oneAlbum&oid=xx&pageNo=1&aid=xx"
-																	class="xh">查看相册</a>
-															</td>
-														</tr>
-													</table>
-												</td>
-											</tr>-->
+										
 										</table>
-										<!--  
-										如果没有相册,这里显示一句话!
-										<font class="word3">xx 还没有相册</font>
-										-->
+										
 									</td>
 								</tr>
 
@@ -321,14 +171,14 @@
 									</td>
 									<td>
 										<a href="album.do?type=album&pageNo=1&oid=xx" class="xh">
-											<< 1  </a>
+											  </a>
 									</td>
 									<td>
-										...
+										
 									</td>
 									<td>
 										<a href="album.do?type=album&pageNo=xx&oid=xx" class="xh">
-											< Last</a>
+											</a>
 									</td>
 								</tr>
 							</table>
@@ -342,7 +192,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- 引入foot.jsp -->
+		<!--foot.jsp -->
 		<jsp:include page="../public/foot.jsp"></jsp:include>
 	</body>
 </html>

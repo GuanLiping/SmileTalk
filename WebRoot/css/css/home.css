@@ -118,7 +118,7 @@ margin: 5px  auto 0 auto;
 /*recent visit*/
 .linkman_last,.may_know,.birth_linkman,.linkman_online{
 	width: 190px;
-	margin: 15px  auto 0 auto;
+	margin: 15px  10px 0 auto;
 }
 /*recent visit table*/
 .linkman_last table,.may_know table,.birth_linkman table,.linkman_online table{

@@ -1,11 +1,35 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<link rel="stylesheet" href="/SmileTalk/css/css/updPersonInfo.css" type="text/css"></link>
-	</head>
+<head>
+
+<link rel="stylesheet" href="/SmileTalk/css/css/updPersonInfo.css" type="text/css"></link>
+<script type="text/javascript" src="/SmileTalk/js/jquery-1.6.2.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+   
+    var select="";
+   
+   $("#selal").change(function(){
+      select=$("#selal").val();
+   });
+   
+   
+   $("#uploadPhoto").click(function(){
+   
+       if(select==undefined||select==""){
+          e.preventDefault();
+       }else{
+         
+         window.location.href="/SmileTalk/album.do?flag=addMorePhotoUI&aid="+select;
+       }
+    });
+});
+</script>
+</head>
 	<body>
 
 		<jsp:include page="head.jsp"></jsp:include>
@@ -51,24 +75,7 @@
 											<textarea class="wbq" name="descript" id="adesc"></textarea>
 										</td>
 									</tr>
-									<tr>
-										<td align="right">
-											<font class="word3" style="font-weight: bold;">Limits of authority:</font>
-										</td>
-										<td align="left">
-											<select style="width: 200px">
-												<option>
-													Only me
-												</option>
-												<option>
-													My freind
-												</option>
-												<option selected="selected">
-													All
-												</option>
-											</select>
-										</td>
-									</tr>
+									
 									<tr>
 										<td>
 											&nbsp;
@@ -99,10 +106,14 @@
 									<tr>
 										<td align="right" width="20%">
 											<font class="word3" style="font-weight: bold;">choose album:</font>
+											 
 										</td>
+										
 										<td align="left">
-											<select id="selal" style="width: 200px" >
-												<!-- which you have -->
+											<select id="selal" style="width: 200px" >				
+												<c:forEach var="album" items="${albumList}">
+												<option value="${album.alId}">${album.alName}</option>
+												</c:forEach>
 											</select>
 										</td>
 									</tr>
@@ -111,8 +122,8 @@
 											&nbsp;
 										</td>
 										<td align="left">
-											<input type="button" class="sub" value="continue"
-												style="width: 60px" onclick="addphoto()" />
+											<input type="button" class="sub" value="continue" id="uploadPhoto"
+												style="width: 60px" />
 											<input type="reset" class="sub" value="cancle"
 												style="width: 60px" />
 										</td>

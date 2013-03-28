@@ -14,6 +14,15 @@ public class ArticleForm extends ActionForm {
 	private Integer readNumber;
 	private String title;
 	private String content;
+	
+	private String articleComment;
+	
+	public String getArticleComment() {
+		return articleComment;
+	}
+	public void setArticleComment(String articleComment) {
+		this.articleComment = articleComment;
+	}
 	public Integer getArticleId() {
 		return articleId;
 	}

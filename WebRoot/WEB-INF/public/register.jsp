@@ -14,7 +14,6 @@
 <script type="text/javascript" src="/SmileTalk/myAJAX/ajax_uni.js"></script>
 <script type="text/javascript">
 
-
 function chooseUniversity(){
 
 if( $("#status").val()=="student"){
@@ -37,16 +36,14 @@ $("#student1").hide();
 }
 }
 
-
 $(document).ready(function(){
     
-    
-    $("#selfChooseCountry").hide(); 
+   $("#selfChooseCountry").hide(); 
     $("#selfChooseCity").hide();
     $("#student2").hide();
-    $("#student1").hide();	
+    $("#student1").hide();	 
     
-    
+     
     $("#country").change(function(){	  
     	if($("#country").val()=="Other"){ 	 	
     	   $("#chooseCity").hide();
@@ -82,21 +79,18 @@ $(document).ready(function(){
      });
      
      
-   $("form").submit(function(e){	 
-	
-    var span0=$("#name").val();
+$("form").submit(function(e){		
+	var span0=$("#name").val();
 	var span1=$("input[name='sex']:checked").val();
     var span2=$("#status").val();
     var span3=$("#country").val();
     var span4=$("#city").val();
     var span5=$("input[name='company']").val();
     var span6=$("#study_type").val();
-    var span7=$("university").find("option:selected").value();
+    var span7=$("input[name='university']").val();
     var span8=$("input[name='email']").val();
     var span9=$("#password1").val();
-    var span10=$("#password2").val();
    
-    
     if(span0==""){
     	$("#span0").show();
     	e.preventDefault();
@@ -186,21 +180,7 @@ $(document).ready(function(){
     	$("#span9").css("border","0px");
     }
     
-    if(span10==""){
-    	$("#span10").show();
-    	e.preventDefault();
-    }else{
-    	$("#span10").empty();
-    	$("#span10").css("border","0px");
-    }
     
-    if(span9!=span10){
-        $("#span10").show();
-    	e.preventDefault();
-    }else{
-        $("#span10").empty();
-    	$("#span10").css("border","0px");
-    }
     
 });
 
@@ -228,13 +208,13 @@ $(document).ready(function(){
 	               </tr>
 	               <tr>
 		                <td class="tab_tb1">Gender:</td>
-		                <td><input type="radio" name="sex" value="Male"/>Male<<input type="radio" name="sex" value="Female"/>Female</td>
+		                <td><input type="radio" name="sex" value="Male"/>Male<input type="radio" name="sex" value="Female"/>Female</td>
 		                <td><span class="spanVal" id="span1">Choose your Gender </span></td>
 	               </tr>
 	               <tr>
 		                <td class="tab_tb1">Status:</td>
 		                <td>
-		                    <select size="3" id="status" name="userType" onchange="changeStatus(this);">
+		                    <select size="3" id="status" onchange="changeStatus(this);">
 		                            <option value="worker">Working</option>
 		                            <option value="student">Student</option>
 		                            <option value="nothing">Other</option> 
@@ -242,30 +222,11 @@ $(document).ready(function(){
 		                </td>
 		                <td><span class="spanVal" id="span2">Choose your status</span></td>
 	               </tr>
-	               
-	                <!-- consider Undergraduate student start-->
-	                <tr class="student">
-		                <td class="tab_tb1">Type:</td>
-		                <td> 
-		                    <select id="study_type" name="userType">
-		                            <option>--Choose--</option>
-		                            <option value="Undergraduate">Undergraduate</option>
-		                            <option value="Master">Master student</option>
-		                            <option value="Doctoral">Doctoral student</option> 
-		                    </select>
-		                </td>
-		                <td><span class="spanVal" id="span6">Choose your study type</span></td>
-	               </tr>
-	               
-	               
-	               
-	               
-	               
 	               <!-- consider working people start-->
                    <tr class="worker">
 		                <td class="tab_tb1">Living Area:</td>
 		                <td>
-		                    <select id="country" name="otherCountry">
+		                    <select id="country">
 		                            <option>--Country--</option>
 		                            <option>Finland</option>
 		                            <option>Other</option>
@@ -276,7 +237,7 @@ $(document).ready(function(){
 	               <tr id="selfChooseCountry" class="worker">
 		                <td class="tab_tb1">Country: </td>
 		                <td>
-		                  <input type="text" name="otherCountry"/>
+		                  <input type="text" name="country"/>
 		                </td>
 		                <td><span class="spanVal" id="span4">Choose your living city</span></td>
 	               </tr>
@@ -285,12 +246,12 @@ $(document).ready(function(){
 	               <tr id="chooseCity" class="worker">
 		                <td class="tab_tb1"> </td>
 		                <td>
-		                    <select id="city" name="cityId" onchange="setProUnis(this)">
+		                    <select id="city"  name="cityId" onchange="setProUnis(this)">
 		                            <option>--Choose City--</option>
 		                            <c:forEach var="city" items="${citylist}">
-		                            <option value="${city.ciId}">${city.ciName}</option>          
+		                            <option  value="${city.ciId}">${city.ciName }</option>          
 		                            </c:forEach>
-		                          
+		                            
 		                    </select>
 		                </td>
 		                <td><span class="spanVal" id="span4">Choose your living city</span></td>
@@ -298,7 +259,6 @@ $(document).ready(function(){
 	               <tr id="selfChooseCity" class="worker">
 		                <td class="tab_tb1">City:</td>
 		                <td>
-		                 <input type="hidden" name="cityId" value="21"/>
 		                <input type="text" name="city"/>
 		                </td>
 		                <td><span class="spanVal" id="span4">Choose your living city</span></td>
@@ -310,8 +270,8 @@ $(document).ready(function(){
 	               </tr>
 	                <!-- consider working people end-->
 	                
-	                            
-	               <tr class="student" id="student1">
+	                <!-- consider Undergraduate student start-->
+	                <tr class="student" id="student1">
 		                <td class="tab_tb1">University:</td>
 		                <td> 
 		                 <select id="university" name="universityId">
@@ -330,7 +290,6 @@ $(document).ready(function(){
 		           </td>
 		                <td><span class="spanVal" id="span7">Choose your university</span></td>
 	               </tr>
-	               
 	               <!-- consider Undergraduate student end--> 
 	               <tr>
 		                <td class="tab_tb1">Email:&nbsp;</td>
@@ -343,29 +302,25 @@ $(document).ready(function(){
 		                <td class="tab_tb1">Set Password:</td>
 		                <td><input type="password" name="pwd" id="password1"/></td>
 		                <td><span class="spanVal" id="span9">Type your password</span></td>
-	               </tr>             
+	               </tr> 
+	               <!--            
 	               <tr>
-		                <td class="tab_tb1">Re-enter Password:</td>
-		           
-		           
-		                <td><input type="password" name="pwd2" id="password2"/></td>
-		                <td><span class="spanVal" id="span10">Type your password again</span></td>
+		                <td class="tab_tb1">Re-enter Password:</td>   
+		                <td><input type="password" name="password" id="password2"/></td>
+		                <td><span class="spanVal" id="spanPwd">Type your password again</span></td>
 	               </tr>
-	               <tr>
-		                <td class="tab_tb1">CAPTCHA:</td>
-		                <td>Type the verification code, change?</td>
-		                <td>[1234]</td>
-	               </tr>
+	                --> 
 	               <tr>
 		                <td></td>
 		                <td><input name="submit" type="submit" value="" class="button1"/></td>
 		                <td></td>
 	               </tr>
+	               <!--  
 	                <tr>
 		                <td></td>
 		                <td><input name="check" type="checkbox"/><span class="font3">&nbsp;I read and agree to SmileTalk <a href="#">Privacy Policy</a></span></td>
 		                <td></td>
-	               </tr>
+	               </tr>-->
             </table>
           </form>
        </div> 
@@ -374,15 +329,15 @@ $(document).ready(function(){
   
   <!-- show university table start -->
 <div class="divSch" id="uniDiv"
-	style="display: none; position: absolute; top: 120px; left: 746px">
-	<table border="1" align="center" height="380px" width="470px"
+	style="display: none; position: absolute; top: 50px; left: 750px">
+	<table border="1" align="center" height="380px" width="500px"
 		bordercolor="#3B5888">
 		<!-- show country -->
 		<tr>
 			<td bordercolor="#C3C3C3" width="500px">
 			<c:forEach  var="country" items="${countrylist}">
 			<a id="${country.coId}" onclick="setCoUnis(this)" class="xh"
-			href="javascript:void(0);">${country.coName}</a>
+			href="javascript:void(0);">${country.coName}</a> |
 			</c:forEach>
 			</td>
 		</tr>
@@ -397,7 +352,7 @@ $(document).ready(function(){
 							<c:forEach var="city" items="${citylist}">
 							<a onclick='setProUnis(this)' href="javascript:void(0);"
 							class="xh" id="${city.ciId}">
-							${city.ciName} </a>|
+							${city.ciName} </a>
 							</c:forEach>
 							</td>
 							

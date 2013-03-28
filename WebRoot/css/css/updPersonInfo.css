@@ -1,10 +1,10 @@
 @CHARSET "UTF-8";
 
-/*中间大div*/
+/*大div*/
 .info_main,.album_main {
 	width: 1000px;
 	
-	/*height: 770px; 这个先暂时去掉，可以让最后的页脚自动调节*/
+	/*height: 770px; */
 	margin: 10px auto 0 auto;
 }
 
@@ -14,10 +14,10 @@
 	margin: 10px auto 0 auto;
 }
 
-/*修改信息*/
+/**/
 .info_left,.personal_left,.album_left {
 	width: 1000px;
-	/*height: 770px; 这个先暂时去掉，可以让最后的页脚自动调节*/
+	/*height: 770px; */
 	float: left;
 }
 

@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -56,27 +57,27 @@
 									<tr>
 										<td colspan="2">
 											<font class="word2">my blog</font>
-											<font class="word2" style="font-weight: normal"> -
+											<font class="word2" style="font-weight: normal"> _
 												${article.title} </font>
 										</td>
 									</tr>
 									<tr>
 										<td style="border-bottom: 1px #D8DFEA solid;">
-											<font class="word4">x  / x  | <a
+											<font class="word4"> <a
 												href="/SmileTalk/article.do?flag=myArticleUI&oid=xx&pageNo=1&aid=xx"
 												class="xh"> back to blog list</a> </font>
 										</td>
 										<td style="border-bottom: 1px #D8DFEA solid;" align="right">
 											<font class="word4"> <a
 												href="album.do?type=onePhoto&pid=xx&oid=xx&aid=xx&pageNo=1"
-												class="xh">Last</a> / <a
+												class="xh"></a>  <a
 												href="album.do?type=onePhoto&pid=xx&oid=xx&aid=xx&pageNo=1"
-												class="xh">Next</a>
+												class="xh"></a>
 											</font>
 										</td>
 									</tr>
 									<tr>
-										<td valign="top" colspan="2" align="center">
+										<td valign="top" colspan="2" align="left">
 											
                                            ${article.content}
 										</td>
@@ -86,10 +87,10 @@
 
 									<tr>
 										<td>
-											<font class="word4">comment</font>
+											<font class="word4"></font>
 										</td>
 										<td align="right">
-											<font class="word4">form my album：</font>
+											<font class="word4"></font>
 											<br/>
 										</td>
 									</tr>
@@ -97,10 +98,10 @@
 
 									<tr>
 										<td style="border-bottom: 1px #DDDDDD solid;">
-											<font class="word3"> upload on ${article.indate} </font>
+											<font class="word3"> written on ${article.indate} </font>
 										</td>
 										<td style="border-bottom: 1px #DDDDDD solid;" align="right">
-											<font class="word3"> view(1) | comment(11) </font>
+											<font class="word3"> comment(${fn:length(articleCommentList)}) </font>
 										</td>
 									</tr>
 									<tr>
@@ -108,6 +109,8 @@
 											<table width="100%" cellspacing="0"
 												cellpadding="5" id="mypc">
 												<!-- comment start -->
+												<c:forEach var="articleComment" items="${articleCommentList}" varStatus="vs">								
+												
 												<tr>
 													<td style="border-bottom: 1px #D8DFEA solid;">
 														<table width="100%" border="0" cellspacing="1"
@@ -115,17 +118,17 @@
 															<tr>
 																<td rowspan="2" width="8%">
 																	<a href="profile.do?type=feed&oid=xx"> <img
-																			src="/SmileTalk/images/userhead/u1.gif" width="50px"
+																			src="/SmileTalk/images/${articleComment.user.userId}/head/${articleComment.user.photo}" width="50px"
 																			height="50px" />
 																	</a>
 																</td>
 																<td>
-																	<a href="profile.do?type=feed&oid=xx" class="xh">comment by </a>
+																	<a href="#" class="xh">comment by ${articleComment.user.name}</a>
 
 																</td>
 																<td align="right" width="25%">
-																	<font class="word3">2010-06-09 22:30 </font>&nbsp;
-																	<a href="javascript:void(0);" class="xh" id="xx"
+																	<font class="word3">${articleComment.indate} </font>&nbsp;
+																	<a href="/SmileTalk/article.do?flag=deleteArticleComment&id=${articleComment.id}&bid= ${article.articleId}" class="xh" id="xx"
 																		onclick="delPC(this)">delete</a>
 																</td>
 															</tr>
@@ -137,6 +140,7 @@
 														</table>
 													</td>
 												</tr>
+												</c:forEach>
 												<!-- comment end -->
 											</table>
 										</td>
@@ -146,24 +150,24 @@
 											<table>
 												<tr>
 													<td>
-														<font class="word2" style="font-size: 12px">xx</font>
+														<font class="word2" style="font-size: 12px"></font>
 													</td>
 													<td>
-														<font class="word2" style="font-size: 12px">Total xx</font>
+														<font class="word2" style="font-size: 12px"></font>
 													</td>
 
 													<td>
 														<a
 															href="album.do?type=onePhoto&pid=xx&oid=xx&aid=xx&pageNo=1"
-															class="xh"> << 1 </a>
+															class="xh"> </a>
 													</td>
 													<td>
-														...
+														
 													</td>
 													<td>
 														<a
 															href="album.do?type=onePhoto&pid=xx&oid=xx&aid=xx&pageNo=xx"
-															class="xh"> < Last</a>
+															class="xh"> </a>
 													</td>
 												</tr>
 											</table>
@@ -171,16 +175,17 @@
 									</tr>
 									<tr>
 										<td colspan="2">
+										<form action="/SmileTalk/article.do?flag=addArticleComment&bid=${article.articleId}&type=self" method="post">					
 											<table width="100%"  cellspacing="1"
 												cellpadding="5">
 												<tr>
 													<td colspan="2">
-														<textarea class="wbq" style="width: 600px" id="cont"></textarea>
+														<textarea class="wbq" style="width: 600px" name="articleComment"></textarea>
 													</td>
 												</tr>
 												<tr>
 													<td>
-														<input class="sub" value="comment" type="button"
+														<input class="sub" value="comment" type="submit"
 															onclick="addPC()" style="width: 100px" />
 													</td>
 													<td>
@@ -188,6 +193,7 @@
 													</td>
 												</tr>
 											</table>
+											</form>
 										</td>
 									</tr>
 
@@ -201,9 +207,9 @@
 				</table>
 			</div>
 		</div>
-		<!-- 引入foot.jsp -->
+		<!-- foot.jsp -->
 		<jsp:include page="../public/foot.jsp"></jsp:include>
-		<!-- 提示是否真的删除 start -->
+		<!-- start -->
 		<div id="divDelPC" style="border: 9px #878787 solid ;width: 400px;display: none;top: 700px;left: 400px;position: absolute;">
 			<table  width="400px" style="line-height: 27px;" cellspacing="0" cellpadding="10px">
 				<tr>

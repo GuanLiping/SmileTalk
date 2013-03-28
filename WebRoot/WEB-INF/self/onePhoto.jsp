@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -62,15 +62,15 @@
 									</tr>
 									<tr>
 										<td style="border-bottom: 1px #D8DFEA solid;">
-											<font class="word4">x  / x  | <a
+											<font class="word4">${count}  / ${fn:length(photoList)}  | <a
 												href="/SmileTalk/album.do?flag=myAlbumUI&oid=xx&pageNo=1&aid=xx"
 												class="xh"> back to album</a> </font>
 										</td>
 										<td style="border-bottom: 1px #D8DFEA solid;" align="right">
 											<font class="word4"> <a
-												href="album.do?type=onePhoto&pid=xx&oid=xx&aid=xx&pageNo=1"
+												href="album.do?flag=lastOnePhotoUI&uid=${uid}&aid=${aid}&pP=${pP}&pid=${pid}&type=self"
 												class="xh">Last</a> / <a
-												href="album.do?type=onePhoto&pid=xx&oid=xx&aid=xx&pageNo=1"
+												href="album.do?flag=nextOnePhotoUI&uid=${uid}&aid=${aid}&pP=${pP}&pid=${pid}&type=self"
 												class="xh">Next</a>
 											</font>
 										</td>
@@ -78,8 +78,8 @@
 									<tr>
 										<td valign="top" colspan="2" align="center">
 											<a
-												href="album.do?type=onePhoto&uid=xx&pid=xx&pP=xx&pageNo=1">
-												<img src="/SmileTalk/images/${uid}/album/${pid }/${pP}" alt="click see next one" width="640px"
+												href="album.do?flag=nextOnePhotoUI&uid=${uid}&aid=${aid}&pP=${pP}&pid=${pid}&pageNo=1&type=self">
+												<img src="/SmileTalk/images/${uid}/album/${aid}/${pP}" alt="click see next one" width="640px"
 													height="480px" /> </a>
 
 										</td>
@@ -92,7 +92,7 @@
 											<font class="word4">comment</font>
 										</td>
 										<td align="right">
-											<font class="word4">form my album：</font>
+											<font class="word4"></font>
 											<br/>
 										</td>
 									</tr>
@@ -103,7 +103,7 @@
 											<font class="word3"> upload on ${photo.PIndate} </font>
 										</td>
 										<td style="border-bottom: 1px #DDDDDD solid;" align="right">
-											<font class="word3"> view(1) | comment(11) </font>
+											<font class="word3"> comment(${fn:length(photoCommentList)}) </font>
 										</td>
 									</tr>
 									<tr>
@@ -111,6 +111,8 @@
 											<table width="100%" cellspacing="0"
 												cellpadding="5" id="mypc">
 												<!-- comment start -->
+												<c:forEach var="photoComment" items="${photoCommentList}" varStatus="vs">								
+												
 												<tr>
 													<td style="border-bottom: 1px #D8DFEA solid;">
 														<table width="100%" border="0" cellspacing="1"
@@ -118,28 +120,29 @@
 															<tr>
 																<td rowspan="2" width="8%">
 																	<a href="profile.do?type=feed&oid=xx"> <img
-																			src="/SmileTalk/images/userhead/u1.gif" width="50px"
+																			src="/SmileTalk/images/${photoComment.user.userId}/head/${photoComment.user.photo}" width="50px"
 																			height="50px" />
 																	</a>
 																</td>
 																<td>
-																	<a href="profile.do?type=feed&oid=xx" class="xh">comment by </a>
+																	<a href="#" class="xh">comment by ${photoComment.user.name}</a>
 
 																</td>
 																<td align="right" width="25%">
-																	<font class="word3">2010-06-09 22:30 </font>&nbsp;
-																	<a href="javascript:void(0);" class="xh" id="xx"
+																	<font class="word3">${photoComment.pcIndate}  </font>&nbsp;
+																	<a href="/SmileTalk/album.do?flag=deletePhotoComment&id=${photoComment.pcId}&uid=${uid}&aid=${aid}&pP=${pP}&pid=${pid}" class="xh" id="xx"
 																		onclick="delPC(this)">delete</a>
 																</td>
 															</tr>
 															<tr>
 																<td colspan="2">
-																	<font class="word4">comment details</font>
+																	<font class="word4">${photoComment.pcContent}</font>
 																</td>
 															</tr>
 														</table>
 													</td>
 												</tr>
+												</c:forEach>
 												<!-- comment end -->
 											</table>
 										</td>
@@ -149,24 +152,24 @@
 											<table>
 												<tr>
 													<td>
-														<font class="word2" style="font-size: 12px">xx</font>
+														<font class="word2" style="font-size: 12px"></font>
 													</td>
 													<td>
-														<font class="word2" style="font-size: 12px">Total xx</font>
+														<font class="word2" style="font-size: 12px">Total ${fn:length(photoList)}</font>
 													</td>
 
 													<td>
 														<a
 															href="album.do?type=onePhoto&pid=xx&oid=xx&aid=xx&pageNo=1"
-															class="xh"> << 1 </a>
+															class="xh">  </a>
 													</td>
 													<td>
-														...
+														
 													</td>
 													<td>
 														<a
 															href="album.do?type=onePhoto&pid=xx&oid=xx&aid=xx&pageNo=xx"
-															class="xh"> < Last</a>
+															class="xh"> </a>
 													</td>
 												</tr>
 											</table>
@@ -174,16 +177,17 @@
 									</tr>
 									<tr>
 										<td colspan="2">
+										<form action="/SmileTalk/album.do?flag=addPhotoComment&uid=${uid}&aid=${aid}&&pP=${pP}&pid=${pid}&type=self" method="post">					
 											<table width="100%"  cellspacing="1"
 												cellpadding="5">
 												<tr>
 													<td colspan="2">
-														<textarea class="wbq" style="width: 600px" id="cont"></textarea>
+														<textarea class="wbq" style="width: 600px" name="photoComment"></textarea>
 													</td>
 												</tr>
 												<tr>
 													<td>
-														<input class="sub" value="comment" type="button"
+														<input class="sub" value="comment" type="submit"
 															onclick="addPC()" style="width: 100px" />
 													</td>
 													<td>
@@ -191,6 +195,7 @@
 													</td>
 												</tr>
 											</table>
+											</form>
 										</td>
 									</tr>
 
@@ -204,9 +209,9 @@
 				</table>
 			</div>
 		</div>
-		<!-- 引入foot.jsp -->
+		<!-- foot.jsp -->
 		<jsp:include page="../public/foot.jsp"></jsp:include>
-		<!-- 提示是否真的删除 start -->
+		<!--  start -->
 		<div id="divDelPC" style="border: 9px #878787 solid ;width: 400px;display: none;top: 700px;left: 400px;position: absolute;">
 			<table  width="400px" style="line-height: 27px;" cellspacing="0" cellpadding="10px">
 				<tr>
@@ -217,7 +222,7 @@
 				</tr>
 				<tr>
 					<td  align="right" bgcolor="#F7F3FF" >
-						<input type="button" onclick="delPC2()" value="Yes" style="color: white;background-color: #3B5888;padding: 3px; width: 60px"  />
+						<input type="button" onclick="divDelPC()" value="Yes" style="color: white;background-color: #3B5888;padding: 3px; width: 60px"  />
 						<input type="button" onclick="canselDel()"  value="cancle"  style="color: black;background-color: #white;padding: 3px; width: 60px"/>
 					</td>
 				</tr>

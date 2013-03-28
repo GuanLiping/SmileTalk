@@ -33,6 +33,10 @@
 		<mapping resource="com/smiletalk/domain/PhotoComment.hbm.xml" />
 		<mapping resource="com/smiletalk/domain/Article.hbm.xml" />
 		<mapping resource="com/smiletalk/domain/ArticleComment.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/Gossip.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/Friend.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/News.hbm.xml" />
+		<mapping resource="com/smiletalk/domain/NewsComment.hbm.xml" />
 
 	</session-factory>
 

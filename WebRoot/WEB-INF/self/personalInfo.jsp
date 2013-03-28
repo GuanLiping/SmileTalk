@@ -42,16 +42,7 @@
 															<a href="/SmileTalk/profile.do?flag=PersonalInfoUI" class="xh"
 																style="color: white">Personal info</a>&nbsp;&nbsp;
 														</td>
-														<td class="tblInfo">
-															&nbsp;&nbsp;
-															<a href="getReady.do?type=edu" class="xh"
-																style="color: black">Education info</a>&nbsp;&nbsp;
-														</td>
-														<td class="tblInfo">
-															&nbsp;&nbsp;
-															<a href="/self/myWorkInfo.jsp" class="xh"
-																style="color: black">Work info</a>&nbsp;&nbsp;
-														</td>
+														
 														<td class="tblInfo">
 															&nbsp;&nbsp;
 															<a href="/SmileTalk/profile.do?flag=UploadPhotoUI" class="xh"
@@ -148,18 +139,7 @@
 															&nbsp;
 														  </td>
 												    </tr>
-												    <tr>
-														  <td valign="top">
-															&nbsp;
-															<font class="word2">Like books: </font> 
-														  </td>
-														  <td valign="top">	
-															<input type="text" name="book" value="${user.book}"/>
-															<br />
-															&nbsp;
-														  </td>
-												    </tr>
-												    <tr>
+												   <tr>
 												      <td></td>
 												      <td>
 												  

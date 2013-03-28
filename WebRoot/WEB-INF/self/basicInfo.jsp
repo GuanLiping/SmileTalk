@@ -5,6 +5,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<link rel="stylesheet" href="/SmileTalk/css/css/updPersonInfo.css" type="text/css"></link>
+	    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+  <script>
+  $(function() {
+        $( "#datepicker" ).datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true
+            ,yearRange:'c-60:c+0'//前30年和后10年
+        });
+    });
+  
+  $(document).ready(function() {
+    $("#datepicker").datepicker();
+    
+  });
+  </script>
+	
 	</head>
 	<body>
 
@@ -42,16 +62,7 @@
 															<a href="/SmileTalk/profile.do?flag=PersonalInfoUI" class="xh"
 																style="color:black">Personal info</a>&nbsp;&nbsp;
 														</td>
-														<td class="tblInfo">
-															&nbsp;&nbsp;
-															<a href="getReady.do?type=edu" class="xh"
-																style="color: black">Education info</a>&nbsp;&nbsp;
-														</td>
-														<td class="tblInfo">
-															&nbsp;&nbsp;
-															<a href="/self/myWorkInfo.jsp" class="xh"
-																style="color: black">Work info</a>&nbsp;&nbsp;
-														</td>
+														
 														<td class="tblInfo">
 															&nbsp;&nbsp;
 															<a href="/SmileTalk/profile.do?flag=UploadPhotoUI" class="xh"
@@ -84,8 +95,9 @@
 															<div style="display:none;">
 															<fmt:formatDate value="${user.birth}" type="date" pattern="yyyy-MM-dd" var="birthday"/>
 															</div>
-															<font class="word2">Birthday: </font> <input type="text" name="birth" value="${birthday}"/>
+															<font class="word2">Birthday: </font> <input type="text" id="datepicker" name="birth" value="${birthday}" readonly="readonly"/>
 															&nbsp;<font class="word3">YYYY-MM-DD</font>
+															
 															<br />
 															
 															
